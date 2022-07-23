@@ -18,5 +18,17 @@
     "titleBar.inactiveBackground": "#ff3d0099",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.remoteColor": "#ff3d00"
+  "peacock.remoteColor": "#ff3d00",
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "localhost",
+      "username": "nimer",
+      "password": "224212",
+      "database": "ticket"
+    }
+  ]
 }
