@@ -1,11 +1,12 @@
 'use strict';
 
+require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const SECRET = process.env.SECRET || 'secret';
 
-const companyModel = (sequelize, DataTypes) => {
-  const company = sequelize.define('companies', {
+const userModel = (sequelize, DataTypes) => {
+  const users = sequelize.define('users', {
     username: {
       type: DataTypes.STRING,
       required: true,
@@ -21,9 +22,9 @@ const companyModel = (sequelize, DataTypes) => {
       unique: true,
     },
     role: {
-      type: DataTypes.ENUM('service_provider', 'admin'),
+      type: DataTypes.ENUM('admin', 'client'),
       required: true,
-      defaultValue: 'service_provider',
+      defaultValue: 'client',
     },
     token: {
       type: DataTypes.VIRTUAL,
@@ -40,19 +41,19 @@ const companyModel = (sequelize, DataTypes) => {
       get() {
         const acl = {
           admin: ['read', 'create', 'update', 'delete'],
-          service_provider: ['read', 'create', 'update'],
+          user: ['read'],
         };
         return acl[this.role];
       }
     }
   });
 
-  company.beforeCreate(async (user) => {
+  users.beforeCreate(async (user) => {
     let hashedPassword = await bcrypt.hash(user.password, 10);
     user.password = hashedPassword;
   });
 
-  company.authenticateBasic = async (username, password) => {
+  users.authenticateBasic = async (username, password) => {
     let user = await user.findOne({ where: { username: username } });
     if (!user) {
       return 'Invalid username';
@@ -64,7 +65,7 @@ const companyModel = (sequelize, DataTypes) => {
     return user;
   };
 
-  company.authenticateToken = async (token) => {
+  users.authenticateToken = async (token) => {
     try {
       const parsedToken = jwt.verify(token, SECRET);
       const user = await user.findOne({ where: { username: parsedToken.username } });
@@ -77,6 +78,6 @@ const companyModel = (sequelize, DataTypes) => {
     }
   };
 
-  return company;
+  return users;
 }
-module.exports = companyModel;
+module.exports = userModel;
