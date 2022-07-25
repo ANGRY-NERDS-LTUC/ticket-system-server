@@ -6,7 +6,7 @@ const { Companies } = require("../models/models.connection");
 
 function bearer(req, res, next) {
     if (req.headers.authorization) {
-        const bearerToken = req.headers.authorization.split(" ")[1];
+        const bearerToken = req.headers.authorization.split(" ")[1]; 
         if (Users) {
             Users.findOne({
                 where: {
