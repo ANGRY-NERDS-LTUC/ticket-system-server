@@ -9,6 +9,12 @@ app.use(express.json());
 app.use('/auth',signupRoutes);
 app.use('/auth',verifyRoute);
 app.use('/auth',signinRoute)
+const notFound = require('./error/404');
+const errorHandler = require('./error/500');
+
+app.use('*', notFound);
+app.use(errorHandler);
+
 module.exports = {
   server: app,
   start: (port) => {
