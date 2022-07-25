@@ -14,21 +14,29 @@ module.exports = async (req, res, next) => {
 
   let basic = req.headers.authorization.split(' ').pop();
   let [displayName, pass] = base64.decode(basic).split(':');
-  console.log(basic,displayName,pass);
-  let user=await Users.findOne({where:{displayName:displayName}})
-  let company=await Companies.findOne({where:{displayName:displayName}});
-  console.log("user",user);
-  console.log('company',company);
+  console.log(basic, displayName, pass);
+  let user = await Users.findOne({
+    where: {
+      displayName: displayName
+    }
+  })
+  let company = await Companies.findOne({
+    where: {
+      displayName: displayName
+    }
+  });
+  console.log("user", user);
+  console.log('company', company);
 
   try {
-    if(user===null){
-    req.user = await Companies.authenticateBasic(displayName, pass)
+    if (user === null) {
+      req.user = await Companies.authenticateBasic(displayName, pass)
     }
-    if(company===null){
-    req.user=await Users.authenticateBasic(displayName, pass)
+    if (company === null) {
+      req.user = await Users.authenticateBasic(displayName, pass)
 
     }
-    console.log(req.user,displayName,pass);
+    console.log(req.user, displayName, pass);
     console.log("ddddd");
     next();
   } catch (e) {

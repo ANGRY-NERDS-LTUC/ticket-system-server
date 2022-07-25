@@ -35,4 +35,12 @@ async function handleSignin(req, res, next) {
         next(e);
     }
 }
+
+
+
+const bearer=require('../../middleware/bearer');
+signinRoute.get('/',bearer,(req,res)=>{
+    res.send('done')
+})
+
 module.exports=signinRoute;
