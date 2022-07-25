@@ -25,6 +25,21 @@ const wishListModel = (sequelize, DataTypes) => {
     duration: {
       type: DataTypes.INTEGER,
       required: true,
+    },
+    role: {
+      type: DataTypes.ENUM('admin', 'client'),
+      required: true,
+      defaultValue: 'client',
+    },
+    actions: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        const acl = {
+          admin: ['read', 'create', 'update', 'delete'],
+          client: ['read', 'create', 'delete'],
+        };
+        return acl[this.role];
+      }
     }
   });
 
