@@ -9,6 +9,7 @@ const packagesModel = require('./product_model/packages.model');
 const specialOffersModel = require('./product_model/specialOffers.model');
 const wishListModel = require('./product_model/wishList.model');
 const Collection = require('./lib/collection.model');
+const { options } = require('../routes/auth_routes/signup.route');
 
 const POSTGRES_URI = process.env.NODE_ENV === 'test' ? 'sqlite:memory:' : process.env.DATABASE_URL;
 
@@ -24,8 +25,8 @@ let sequelizeOptions =
       },
     } : {};
 
-const sequelize = new Sequelize(POSTGRES_URI, sequelizeOptions);
-
+const sequelize = new Sequelize(POSTGRES_URI, sequelizeOptions)
+sequelize.options.logging=false;
 const users = userModel(sequelize, DataTypes);
 const companies = companyModel(sequelize, DataTypes);
 const charts = chartModel(sequelize, DataTypes);
