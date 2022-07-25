@@ -1,13 +1,21 @@
 'use strict';
 
 const express = require('express');
-//const packageRouter = require('./routes/company_routes/form.route')
+const signupRoutes = require('./routes/auth_routes/signup.route');
+const verifyRoute = require('./routes/auth_routes/verify.route');
+const signinRoute = require('./routes/auth_routes/signin.route');
+const packageRouter = require('./routes/company_routes/form.route')
 const notFound = require('./error/404');
 const errorHandler = require('./error/500');
 
 const app = express();
 app.use(express.json());
-//app.use(packageRouter);
+
+
+app.use('/auth', signupRoutes);
+app.use('/auth', verifyRoute);
+app.use('/auth', signinRoute)
+app.use(packageRouter);
 
 
 app.use('*', notFound);
