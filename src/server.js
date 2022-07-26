@@ -11,11 +11,11 @@ const { Server } = require('socket.io');
 
 const app = express();
 const http = require('http')
-// const io = require('socket.io')(http);
-app.use(express.json());
-app.use(cors());
-
 const server = http.createServer(app);
+
+
+app.use(cors());
+app.use(express.json());
 
 const io = new Server(server, {
   cors: {
@@ -35,7 +35,6 @@ app.use(errorHandler);
 
 io.on('connection', (socket) => {
   console.log('a user connected', socket.id);
-  socket.removeAllListeners();
 
   socket.on("join_room", (data) => {
     socket.join(data);

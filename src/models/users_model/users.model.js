@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
 require('dotenv').config();
 const userModel = (sequelize, DataTypes) => {
-    const model = sequelize.define('client1', {
+    const model = sequelize.define('client', {
         displayName: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -19,6 +19,10 @@ const userModel = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        type: {
+            type: DataTypes.STRING,
+            defaultValue: 'client',
         },
         role: {
             type: DataTypes.ENUM('admin', 'client'),
@@ -87,8 +91,8 @@ const userModel = (sequelize, DataTypes) => {
             subject: "Sign Up validation", // Subject line
             text: `Long time no see welcome to our server use this code ${code} to verify your email here 'https://salehziad-projects.netlify.app/verify'`, // plain text body
         }
-        const info = await transporter.sendMail(msg);
-        console.log({info});
+        // const info = await transporter.sendMail(msg);
+        console.log({code});
     }
 
     model.authenticateBasic = async function (displayName, password) {
