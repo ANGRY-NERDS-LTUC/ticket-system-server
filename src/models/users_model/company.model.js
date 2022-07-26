@@ -28,9 +28,13 @@ const companyModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    type: {
+      type: DataTypes.STRING,
+      defaultValue: 'company',
+  },
     role: {
-      type: DataTypes.ENUM('admin', 'user'),
-      defaultValue: 'user',
+      type: DataTypes.ENUM('admin', 'serviceProvidre'),
+      defaultValue: 'serviceProvidre',
     },
     token: {
       type: DataTypes.VIRTUAL,
@@ -52,7 +56,7 @@ const companyModel = (sequelize, DataTypes) => {
       type: DataTypes.VIRTUAL,
       get() {
         const acl = {
-          user: ['read'],
+          serviceProvidre: ['read'],
           admin: ['read', 'create', 'update', 'delete'],
         }
         return acl[this.role];
@@ -70,6 +74,7 @@ const companyModel = (sequelize, DataTypes) => {
   };
 
   model.sendEmail = async function (user) {
+    // console.log("ddd",{user});
     const email = user.email;
     let userMail = await this.findOne({
       where: {
@@ -117,11 +122,13 @@ const companyModel = (sequelize, DataTypes) => {
   model.authenticateToken = async function (token) {
     try {
       const parsedToken = jwt.verify(token, process.env.SECRET);
+      console.log(parsedToken.displayName);
       const user = await this.findOne({
         where: {
           displayName: parsedToken.displayName
         }
       });
+      console.log(user);
       if (user) {
         return user;
       }
