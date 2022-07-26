@@ -5,18 +5,18 @@ const {
 const {
     Companies
 } = require('../../models/models.connection');
-console.log("ssssssssssssssssssssssssqqqqq",Users,Companies)
-const express=require('express')
-const signupRoutes=express.Router();
+console.log("ssssssssssssssssssssssssqqqqq", Users, Companies)
+const express = require('express')
+const signupRoutes = express.Router();
 const {
     v4: uuidv4
 } = require('uuid');
 
-signupRoutes.post('/user/signup',handleSignup);
+signupRoutes.post('/user/signup', handleSignup);
 async function handleSignup(req, res, next) {
     try {
         const user = req.body
-        if (Object.keys(user).length === 0) {}
+        if (Object.keys(user).length === 0) { }
         let x = user.displayName;
         if (x.length === 0) {
             res.status(403).send('no data entered')
@@ -33,8 +33,8 @@ async function handleSignup(req, res, next) {
             role: req.body.role,
             uuCode: UuCode
         });
-        
-        // let mailed = await Users.sendEmail(user);
+
+        let mailed = await Users.sendEmail(user);
         // console.log({mailed});
         const output = {
             displayName: userRecord.displayName,
@@ -65,18 +65,24 @@ signupRoutes.post('/companies/signup', handleSignupCompanies);
 async function handleSignupCompanies(req, res, next) {
     // console.log("ffffffffffffff");
     try {
-        const user = req.body
-        if (Object.keys(user).length === 0) {}
-        let x = user.displayName;
+        const user = req.body;
+        console.log(user)
+        if (Object.keys(user).length === 0) { }
+        let x = req.body.displayName;
+        console.log({ x });
         if (x.length === 0) {
             res.status(403).send('no data entered')
         }
         let UuCode = uuidv4();
+        console.log({
+            UuCode
+        });
+        // let mailed = await Companies.sendEmail(user);
         var hashed = await Companies.beforeCreate(user);
         let userRecord = await Companies.create({
             displayName: req.body.displayName,
             email: req.body.email,
-            location:req.body.location,
+            location: req.body.location,
             password: hashed,
             phoneNumber: req.body.phoneNumber,
             role: req.body.role,
@@ -87,7 +93,7 @@ async function handleSignupCompanies(req, res, next) {
         const output = {
             displayName: userRecord.displayName,
             email: userRecord.email,
-            location:userRecord.location,
+            location: userRecord.location,
             phoneNumber: userRecord.phoneNumber,
             isVerify: userRecord.isVerify,
             role: userRecord.role,
@@ -110,4 +116,4 @@ async function handleSignupCompanies(req, res, next) {
         next(e);
     }
 }
-module.exports =signupRoutes;
+module.exports = signupRoutes;

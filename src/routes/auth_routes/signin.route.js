@@ -4,14 +4,15 @@
 // } = require('../../models/models.connection');
 const express = require('express');
 const signinRoute = express.Router();
-const basic=require('../../middleware/basic')
-signinRoute.post('/login',basic,handleSignin)
+const basic = require('../../middleware/basic')
+signinRoute.post('/login', basic, handleSignin)
 
 async function handleSignin(req, res, next) {
     try {
         const user = {
             user: req.user,
-            token: req.user.token
+            token: req.user.token,
+            type: req.type
         };
         let verivied = req.user.isVerify;
         if (verivied === true) {
@@ -38,9 +39,9 @@ async function handleSignin(req, res, next) {
 
 
 
-const bearer=require('../../middleware/bearer');
-signinRoute.get('/',bearer,(req,res)=>{
+const bearer = require('../../middleware/bearer');
+signinRoute.get('/', bearer, (req, res) => {
     res.send('done')
 })
 
-module.exports=signinRoute;
+module.exports = signinRoute;

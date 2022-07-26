@@ -29,6 +29,7 @@ async function getOneSpecialOffer(req, res) {
 // for adding new record
 async function createSpecialOffer(req, res) {
     let newSpecialOffer = req.body;
+    console.log('newSpecialOffer', newSpecialOffer);
     let specialOffer = await SpecialOffers.create(newSpecialOffer);
     res.status(201).json(specialOffer);
 }
@@ -36,7 +37,9 @@ async function createSpecialOffer(req, res) {
 async function updateSpecialOffer(req, res) {
     let specialOfferId = parseInt(req.params.id);
     let updatespecialOffer = req.body;
+    console.log("updatespecialOffer", updatespecialOffer);
     let foundSpecialOffer = await SpecialOffers.get(specialOfferId);
+    console.log("foundSpecialOffer", foundSpecialOffer);
     if (foundSpecialOffer) {
         let updatedSpecialOffer = await foundSpecialOffer.update(specialOfferId, updatespecialOffer);
         res.status(201).json(updatedSpecialOffer);
