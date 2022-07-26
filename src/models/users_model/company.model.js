@@ -28,6 +28,10 @@ const companyModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    type: {
+      type: DataTypes.STRING,
+      defaultValue: 'company',
+  },
     role: {
       type: DataTypes.ENUM('admin', 'serviceProvidre'),
       defaultValue: 'serviceProvidre',

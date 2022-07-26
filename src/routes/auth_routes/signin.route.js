@@ -40,8 +40,22 @@ async function handleSignin(req, res, next) {
 
 
 const bearer = require('../../middleware/bearer');
-signinRoute.get('/', bearer, (req, res) => {
-    res.send('done')
+const checkUser = require('../../middleware/checkUser');
+const checkCompany = require('../../middleware/checkCompany');
+const { Users } = require('../../models/models.connection');
+const {
+    Companies
+} = require('../../models/models.connection');
+const { uuid } = require('uuidv4');
+
+signinRoute.post('/companies', bearer, checkCompany(), async (req, res) => { //localhost:5000/auth/companies?type=company
+    let user = await Companies.findAll()
+    res.send(user)
 })
 
+
+signinRoute.get('/users', bearer, checkUser(), async (req, res) => { // localhost:5000/auth/users?type=client
+    let user = await Users.findAll()
+    res.send(user)
+})
 module.exports = signinRoute;

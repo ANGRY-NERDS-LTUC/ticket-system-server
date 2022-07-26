@@ -4,13 +4,23 @@ const express = require('express');
 const signupRoutes = require('./routes/auth_routes/signup.route');
 const verifyRoute = require('./routes/auth_routes/verify.route');
 const signinRoute = require('./routes/auth_routes/signin.route');
-//const packageRouter = require('./routes/company_routes/form.route');
 const homeRouter = require('./routes/home.route');
+const cors = require('cors');
+const app = express();
+app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
+app.use('/auth', signupRoutes);
+app.use('/auth', verifyRoute);
+app.use('/auth', signinRoute)
 const notFound = require('./error/404');
 const errorHandler = require('./error/500');
 
-const app = express();
-app.use(express.json());
 
 
 app.use('/auth', signupRoutes);
