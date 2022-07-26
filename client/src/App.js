@@ -1,5 +1,3 @@
-'use strict';
-
 import './App.css';
 import io from "socket.io-client";
 import { useState } from "react";
