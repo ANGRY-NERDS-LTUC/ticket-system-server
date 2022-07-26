@@ -31,10 +31,11 @@ module.exports = async (req, res, next) => {
   try {
     if (user === null) {
       req.user = await Companies.authenticateBasic(displayName, pass)
+      req.type='company'
     }
     if (company === null) {
       req.user = await Users.authenticateBasic(displayName, pass)
-
+      req.type='client'
     }
     console.log(req.user, displayName, pass);
     console.log("ddddd");
