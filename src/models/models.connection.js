@@ -59,9 +59,8 @@ module.exports = {
   db: sequelize,
   Users: users,
   Companies: companies,
-  Charts: new Collection(charts),
-  Packages: new Collection(packages),
-  SpecialOffers: new Collection(specialOffers),
-  WishList: new Collection(wishList),
+  Packages: packages,
+  SpecialOffers: specialOffers,
+  //WishList: new Collection(wishList),
 
 }

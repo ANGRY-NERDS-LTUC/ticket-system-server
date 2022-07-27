@@ -4,48 +4,81 @@ const express = require('express');
 const { Packages } = require('../../models/models.connection');
 const bearer = require('../../middleware/bearer');
 const checkCompany = require('../../middleware/checkCompany');
-const acl = require('../../middleware/acl');
-const formRouter = express.Router();
+const { Companies } = require('../../models/models.connection');
+const formRoute = express.Router();
 
-formRouter.get('/form', bearer, acl('read'), checkCompany(), handleGetAll);
-formRouter.get('/form/:id', bearer, acl('read'), checkCompany(), handleGetOne);
-formRouter.post('/form', bearer, acl('create'), checkCompany(), handleCreate);
-formRouter.put('/form/:id', bearer, acl('update'), checkCompany(), handleUpdate);
-formRouter.delete('/form/:id', bearer, acl('delete'), checkCompany(), handleDelete);
+formRoute.get('/packages', bearer, checkCompany(), handleGetAll);
+formRoute.post('/packages', bearer, checkCompany(), handleCreate);
+formRoute.delete('/packages/:id', bearer, checkCompany(), handleDelete);
 
 async function handleGetAll(req, res) {
-    let allPackages = await Packages.getAll();
+    let packageId = req.user.id;
+    let allPackages = await Companies.findOne({
+        where: { id: packageId },
+        include: Packages
+    });
     res.status(200).json(allPackages);
 }
 
-async function handleGetOne(req, res) {
-    const id = req.params.id;
-    let specificPackage = await Packages.get(id);
-    res.status(200).json(specificPackage);
-}
-
 async function handleCreate(req, res) {
+    let user = req.user;
     let obj = req.body;
-    obj.companyId = req.user.id;
-    obj.company_Id = req.user.id;
-    let newPackage = await Packages.create(obj);
-    res.status(201).json(newPackage);
-}
-
-async function handleUpdate(req, res) {
-    const id = req.params.id;
-    let obj = req.body;
-    let updatedPackage = await Packages.update(id, obj);
-    res.status(200).json(updatedPackage);
+    let createdPackage = await Packages.create(obj);
+    await user.addPackage(createdPackage);
+    res.status(201).json(createdPackage);
 }
 
 async function handleDelete(req, res) {
     const id = req.params.id;
-    let deletedPackage = await Packages.delete(id);
-    res.status(204).json(deletedPackage);
+    await Packages.destroy({
+        where: { id: id },
+    });
+    res.status(204).send('Package successfully deleted');
 }
 
-module.exports = formRouter;
+module.exports = formRoute;
+//-_______________________________
+
+
+// 'use strict';
+
+// const express = require('express');
+// const { Charts } = require('../../models/models.connection');
+// const bearer = require('../../middleware/bearer');
+// const checkUser = require('../../middleware/checkUser');
+// const { Users } = require('../../models/models.connection');
+// const chartRoute = express.Router();
+
+// chartRoute.get('/chart', bearer, checkUser(), handleGetAll);
+// chartRoute.post('/chart', bearer, checkUser(), handleCreate);
+// chartRoute.delete('/chart/:id', bearer, checkUser(), handleDelete);
+
+// async function handleGetAll(req, res) {
+//     let userId = req.user.id;
+//     let allChartPackages = await Users.findOne({
+//         where: { id: userId},
+//         include: Charts
+//     });
+//     res.status(200).json(allChartPackages);
+// }
+
+// async function handleCreate(req, res) {
+//     let user = req.user;
+//     let obj = req.body;
+//     let createdChartPackage = await Charts.create(obj);
+//     await user.addChart(createdChartPackage);
+//     res.status(201).json(createdChartPackage);
+// }
+
+// async function handleDelete(req, res) {
+//     const id = req.params.id;
+//     await Charts.destroy({
+//         where: { id: id },
+//     });
+//     res.status(204).send('Package successfully deleted');
+// }
+
+// module.exports = chartRoute;
 
 
 
@@ -66,11 +99,7 @@ module.exports = formRouter;
 
 
 
-
-
-
-
-
+//_______________________________________________
 // "use strict";
 // const express = require("express");
 
