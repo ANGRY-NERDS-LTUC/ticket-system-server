@@ -5,6 +5,8 @@ const signupRoutes = require('./routes/auth_routes/signup.route');
 const verifyRoute = require('./routes/auth_routes/verify.route');
 const signinRoute = require('./routes/auth_routes/signin.route');
 const homeRouter = require('./routes/home.route');
+const formRouter = require('./routes/company_routes/form.route');
+
 const cors = require('cors');
 const app = express();
 app.use(express.json());
@@ -26,8 +28,8 @@ const errorHandler = require('./error/500');
 app.use('/auth', signupRoutes);
 app.use('/auth', verifyRoute);
 app.use('/auth', signinRoute)
-//app.use(packageRouter);
 app.use(homeRouter);
+app.use(formRouter);
 
 
 app.use('*', notFound);

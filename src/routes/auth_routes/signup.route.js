@@ -1,10 +1,6 @@
 'use strict';
-const {
-    Users
-} = require('../../models/models.connection');
-const {
-    Companies
-} = require('../../models/models.connection');
+const { Users } = require('../../models/models.connection');
+const { Companies } = require('../../models/models.connection');
 console.log("ssssssssssssssssssssssssqqqqq", Users, Companies)
 const express = require('express')
 const signupRoutes = express.Router();
@@ -25,6 +21,7 @@ async function handleSignup(req, res, next) {
         console.log({
             UuCode
         });
+
         var hashed = await Users.beforeCreate(user);
         let userRecord = await Users.create({
             displayName: req.body.displayName,
@@ -42,7 +39,7 @@ async function handleSignup(req, res, next) {
             isVerify: userRecord.isVerify,
             role: userRecord.role,
             createdAt: userRecord.createdAt,
-            updatedAt: userRecord.updatedAt
+            updatedAt: userRecord.updatedAt,
         };
         // if (output) {
         //     let logs = await signupUsers.create({

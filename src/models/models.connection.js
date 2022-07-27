@@ -42,11 +42,12 @@ packages.belongsToMany(users, { through: 'user_packages' });
 users.belongsToMany(charts, { through: 'user_chart' });
 charts.belongsToMany(users, { through: 'user_chart' });
 
-// users.belongsToMany(specialOffers, { through: 'user_specialOffers' });
-// specialOffers.belongsToMany(users, { through: 'user_specialOffers' });
+users.belongsToMany(specialOffers, { through: 'user_specialOffers' });
+specialOffers.belongsToMany(users, { through: 'user_specialOffers' });
 
 users.belongsToMany(wishList, { through: 'user_wishList' });
 wishList.belongsToMany(users, { through: 'user_wishList' });
+
 companies.hasMany(packages, { foreignKey: 'company_Id' });
 packages.belongsTo(companies);
 

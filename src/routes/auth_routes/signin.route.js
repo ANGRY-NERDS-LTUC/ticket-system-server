@@ -49,6 +49,7 @@ const {
 const { uuid } = require('uuidv4');
 
 signinRoute.post('/companies', bearer, checkCompany(), async (req, res) => { //localhost:5000/auth/companies?type=company
+    //req.user.id;    
     let user = await Companies.findAll()
     res.send(user)
 })
