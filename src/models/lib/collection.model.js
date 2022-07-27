@@ -24,12 +24,23 @@ class Collection {
     }
   }
 
-  async getAll() {
-    try {
-      let records = await this.model.findAll();
-      return records;
-    } catch (err) {
-      throw new Error(err, 'Error getting all records');
+  async getAll(userName) {
+    if (userName) {
+      try {
+        let records = await this.model.findAll({
+          where: { userName: userName }
+        });
+        return records;
+      } catch (err) {
+        throw new Error(err, 'Error getting all records');
+      }
+    } else {
+      try {
+        let records = await this.model.findAll();
+        return records;
+      } catch (err) {
+        throw new Error(err, 'Error getting all records');
+      }
     }
   }
 
