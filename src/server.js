@@ -1,24 +1,27 @@
 'use strict';
 
 const express = require('express');
-const cors = require('cors');
 const signupRoutes = require('./routes/auth_routes/signup.route');
 const verifyRoute = require('./routes/auth_routes/verify.route');
 const signinRoute = require('./routes/auth_routes/signin.route');
+const homeRouter = require('./routes/home.route');
 const packagesRoute = require('./routes/client_routes/packages.route');
 const chartRoute = require('./routes/client_routes/chart.route');
 const wishListRoute = require('./routes/client_routes/wishList.route');
+const specialOffersRoute = require('./routes/company_routes/specialOffers.route');
 const notFound = require('./error/404');
 const errorHandler = require('./error/500');
 const { Server } = require('socket.io');
+const cors = require('cors');
+const http = require('http')
 
 const app = express();
-const http = require('http')
+
+app.use(express.json());
 const server = http.createServer(app);
 
-
 app.use(cors());
-app.use(express.json());
+
 
 const io = new Server(server, {
   cors: {
@@ -27,12 +30,17 @@ const io = new Server(server, {
   },
 });
 
+
+
 app.use('/auth', signupRoutes);
 app.use('/auth', verifyRoute);
 app.use('/auth', signinRoute)
+app.use(homeRouter);
+
 app.use(packagesRoute);
 app.use(chartRoute);
 app.use(wishListRoute);
+app.use(specialOffersRoute);
 
 app.use('*', notFound);
 app.use(errorHandler);

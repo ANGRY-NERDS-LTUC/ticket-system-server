@@ -25,6 +25,26 @@ const packagesModel = (sequelize, DataTypes) => {
     duration: {
       type: DataTypes.INTEGER,
       required: true,
+    },
+    publish: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    role: {
+      type: DataTypes.ENUM('admin', 'client', 'serviceProvider'),
+      required: true,
+      defaultValue: 'client',
+    },
+    actions: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        const acl = {
+          admin: ['read', 'create', 'update', 'delete'],
+          client: ['read'],
+          serviceProvider: ['read', 'create', 'update']
+        };
+        return acl[this.role];
+      }
     }
   });
   return packages;

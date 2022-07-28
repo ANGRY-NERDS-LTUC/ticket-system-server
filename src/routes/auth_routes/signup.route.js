@@ -1,22 +1,18 @@
 'use strict';
-const {
-    Users
-} = require('../../models/models.connection');
-const {
-    Companies
-} = require('../../models/models.connection');
-console.log("ssssssssssssssssssssssssqqqqq",Users,Companies)
-const express=require('express')
-const signupRoutes=express.Router();
+const { Users } = require('../../models/models.connection');
+const { Companies } = require('../../models/models.connection');
+console.log("ssssssssssssssssssssssssqqqqq", Users, Companies)
+const express = require('express')
+const signupRoutes = express.Router();
 const {
     v4: uuidv4
 } = require('uuid');
 
-signupRoutes.post('/user/signup',handleSignup);
+signupRoutes.post('/user/signup', handleSignup);
 async function handleSignup(req, res, next) {
     try {
         const user = req.body
-        if (Object.keys(user).length === 0) {}
+        if (Object.keys(user).length === 0) { }
         let x = user.displayName;
         if (x.length === 0) {
             res.status(403).send('no data entered')
@@ -25,6 +21,7 @@ async function handleSignup(req, res, next) {
         console.log({
             UuCode
         });
+
         var hashed = await Users.beforeCreate(user);
         let userRecord = await Users.create({
             displayName: req.body.displayName,
@@ -33,7 +30,7 @@ async function handleSignup(req, res, next) {
             role: req.body.role,
             uuCode: UuCode
         });
-        
+
         let mailed = await Users.sendEmail(user);
         // console.log({mailed});
         const output = {
@@ -42,7 +39,7 @@ async function handleSignup(req, res, next) {
             isVerify: userRecord.isVerify,
             role: userRecord.role,
             createdAt: userRecord.createdAt,
-            updatedAt: userRecord.updatedAt
+            updatedAt: userRecord.updatedAt,
         };
         // if (output) {
         //     let logs = await signupUsers.create({
@@ -67,9 +64,9 @@ async function handleSignupCompanies(req, res, next) {
     try {
         const user = req.body;
         console.log(user)
-        if (Object.keys(user).length === 0) {}
+        if (Object.keys(user).length === 0) { }
         let x = req.body.displayName;
-        console.log({x});
+        console.log({ x });
         if (x.length === 0) {
             res.status(403).send('no data entered')
         }
@@ -82,7 +79,7 @@ async function handleSignupCompanies(req, res, next) {
         let userRecord = await Companies.create({
             displayName: req.body.displayName,
             email: req.body.email,
-            location:req.body.location,
+            location: req.body.location,
             password: hashed,
             phoneNumber: req.body.phoneNumber,
             role: req.body.role,
@@ -93,7 +90,7 @@ async function handleSignupCompanies(req, res, next) {
         const output = {
             displayName: userRecord.displayName,
             email: userRecord.email,
-            location:userRecord.location,
+            location: userRecord.location,
             phoneNumber: userRecord.phoneNumber,
             isVerify: userRecord.isVerify,
             role: userRecord.role,
@@ -116,4 +113,4 @@ async function handleSignupCompanies(req, res, next) {
         next(e);
     }
 }
-module.exports =signupRoutes;
+module.exports = signupRoutes;

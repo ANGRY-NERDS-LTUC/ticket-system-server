@@ -7,6 +7,7 @@ class Collection {
 
   async create(data) {
     try {
+      console.log("data", data);
       let newRecord = await this.model.create(data);
       return newRecord;
     } catch (err) {

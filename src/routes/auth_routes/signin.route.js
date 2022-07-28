@@ -4,15 +4,15 @@
 // } = require('../../models/models.connection');
 const express = require('express');
 const signinRoute = express.Router();
-const basic=require('../../middleware/basic')
-signinRoute.post('/login',basic,handleSignin)
+const basic = require('../../middleware/basic')
+signinRoute.post('/login', basic, handleSignin)
 
 async function handleSignin(req, res, next) {
     try {
         const user = {
             user: req.user,
             token: req.user.token,
-            type:req.type
+            type: req.type
         };
         let verivied = req.user.isVerify;
         if (verivied === true) {
@@ -39,23 +39,24 @@ async function handleSignin(req, res, next) {
 
 
 
-const bearer=require('../../middleware/bearer');
-const checkUser=require('../../middleware/checkUser');
-const checkCompany=require('../../middleware/checkCompany');
-const { Users } = require('../../models/models.connection');
-const {
-    Companies
-} = require('../../models/models.connection');
-const { uuid } = require('uuidv4');
+// const bearer = require('../../middleware/bearer');
+// const checkUser = require('../../middleware/checkUser');
+// const checkCompany = require('../../middleware/checkCompany');
+// const { Users } = require('../../models/models.connection');
+// const {
+//     Companies
+// } = require('../../models/models.connection');
+// const { uuid } = require('uuidv4');
 
-signinRoute.post('/companies',bearer,checkCompany(),async (req,res)=>{ //localhost:5000/auth/companies?type=company
-    let user=await Companies.findAll()
-    res.send(user)
-})
+// signinRoute.get('/companies', bearer, checkCompany(), async (req, res) => { //localhost:5000/auth/companies?type=company
+//     //req.user.id;    
+//     let user = await Companies.findAll()
+//     res.send(user)
+// })
 
 
-signinRoute.get('/users',bearer,checkUser(),async (req,res)=>{ // localhost:5000/auth/users?type=client
-    let user=await Users.findAll()
-    res.send(user)
-})
-module.exports=signinRoute;
+// signinRoute.get('/users', bearer, checkUser(), async (req, res) => { // localhost:5000/auth/users?type=client
+//     let user = await Users.findAll()
+//     res.send(user)
+// })
+module.exports = signinRoute;
