@@ -1,40 +1,21 @@
 'use strict';
 
 const express = require('express');
-const { SpecialOffers } = require('../../models/models.connection');
-const bearer = require('../../middleware/bearer');
-const checkCompany = require('../../middleware/checkCompany');
-const { Companies } = require('../../models/models.connection');
+const { SpecialOffers } = require('../models/models.connection');
+const bearer = require('../middleware/bearer');
+const checkCompany = require('../middleware/checkCompany');
+const { Companies } = require('../models/models.connection');
 const homeRoute = express.Router();
 
-homeRoute.get('/specialOffer', bearer, checkCompany(), handleGetAll);
-homeRoute.post('/specialOffer', bearer, checkCompany(), handleCreate);
-homeRoute.delete('/specialOffer/:id', bearer, checkCompany(), handleDelete);
+homeRoute.get('/', handleGetAll);
+
 
 async function handleGetAll(req, res) {
-    let SpecialOffersId = req.user.id;
-    let allSpecialOffers = await Companies.findOne({
-        where: { id: SpecialOffersId },
-        include: SpecialOffers
-    });
-    res.status(200).json(allSpecialOffers);
+    // let SpecialOffersId = req.user.id;
+    let allOffers = await SpecialOffers.findAll();
+    res.status(200).json(allOffers);
 }
 
-async function handleCreate(req, res) {
-    let user = req.user;
-    let obj = req.body;
-    let createdSpecialOffer = await SpecialOffers.create(obj);
-    await user.addSpecialOffer(createdSpecialOffer);
-    res.status(201).json(createdSpecialOffer);
-}
-
-async function handleDelete(req, res) {
-    const id = req.params.id;
-    await SpecialOffers.destroy({
-        where: { id: id },
-    });
-    res.status(204).send('Package successfully deleted');
-}
 
 module.exports = homeRoute;
 

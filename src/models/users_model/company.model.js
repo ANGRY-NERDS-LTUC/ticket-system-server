@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
 require('dotenv').config();
 const companyModel = (sequelize, DataTypes) => {
-  const model = sequelize.define('Com', {
+  const model = sequelize.define('companies', {
     displayName: {
       type: DataTypes.STRING,
       allowNull: false,

@@ -1,11 +1,7 @@
 'use strict';
 
 const specialOffersModel = (sequelize, DataTypes) => {
-  const specialOffers = sequelize.define('specialOffers2', {
-    company_Id: {
-      type: DataTypes.INTEGER,
-      required: true,
-    },
+  const specialOffers = sequelize.define('specialoffer', {
     title: {
       type: DataTypes.STRING,
       required: true,
