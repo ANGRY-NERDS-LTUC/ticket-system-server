@@ -16,25 +16,48 @@ class Collection {
 
   async get(id) {
     try {
-      let record = await this.model.findOne({ where: { id: id } });
+      let record = await this.model.findOne({
+        where: {
+          id: id
+        }
+      });
       return record;
     } catch (err) {
       throw new Error(err, 'Error getting record');
     }
   }
 
-  async getAll() {
-    try {
-      let records = await this.model.findAll();
-      return records;
-    } catch (err) {
-      throw new Error(err, 'Error getting all records');
+
+  async getAll(id) {
+    if (id) {
+      console.log("yyyyyyyyyyyyyyyyyyyyyy");
+      try {
+        let records = await this.model.findAll({
+          where: {
+            clientId: id
+          }
+        });
+        return records;
+      } catch (err) {
+        throw new Error(err, 'Error getting all records');
+      }
+    } else {
+      try {
+        let records = await this.model.findAll();
+        return records;
+      } catch (err) {
+        throw new Error(err, 'Error getting all records');
+      }
     }
   }
 
   async update(id, data) {
     try {
-      let record = await this.model.update(data, { where: { id: id } });
+      let record = await this.model.update(data, {
+        where: {
+          id: id
+        }
+      });
       return record;
     } catch (err) {
       throw new Error(err, 'Error updating record');
@@ -43,7 +66,11 @@ class Collection {
 
   async delete(id) {
     try {
-      let record = await this.model.destroy({ where: { id: id } });
+      let record = await this.model.destroy({
+        where: {
+          id: id
+        }
+      });
       return record;
     } catch (err) {
       throw new Error(err, 'Error deleting record');

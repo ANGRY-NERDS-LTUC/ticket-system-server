@@ -5,6 +5,7 @@ const cors = require('cors');
 const signupRoutes = require('./routes/auth_routes/signup.route');
 const verifyRoute = require('./routes/auth_routes/verify.route');
 const signinRoute = require('./routes/auth_routes/signin.route');
+const adminRoutes= require('./routes/admin_routes/dashboard.route');
 const notFound = require('./error/404');
 const errorHandler = require('./error/500');
 const { Server } = require('socket.io');
@@ -26,7 +27,8 @@ const io = new Server(server, {
 
 app.use('/auth', signupRoutes);
 app.use('/auth', verifyRoute);
-app.use('/auth', signinRoute)
+app.use('/auth', signinRoute);
+app.use('/admin',adminRoutes);
 
 app.use('*', notFound);
 app.use(errorHandler);

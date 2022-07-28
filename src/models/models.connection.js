@@ -8,6 +8,7 @@ const chartModel = require('./product_model/chart.model');
 const packagesModel = require('./product_model/packages.model');
 const specialOffersModel = require('./product_model/specialOffers.model');
 const wishListModel = require('./product_model/wishList.model');
+const signInModel=require('./logs/sign-in-logs');
 const Collection = require('./lib/collection.model');
 const { options } = require('../routes/auth_routes/signup.route');
 
@@ -33,7 +34,7 @@ const charts = chartModel(sequelize, DataTypes);
 const packages = packagesModel(sequelize, DataTypes);
 const specialOffers = specialOffersModel(sequelize, DataTypes);
 const wishList = wishListModel(sequelize, DataTypes);
-
+const signInLogs=signInModel(sequelize, DataTypes);
 
 
 users.belongsToMany(packages, { through: 'user_packages' });
@@ -63,4 +64,5 @@ module.exports = {
   Packages: new Collection(packages),
   SpecialOffers: new Collection(specialOffers),
   WishList: new Collection(wishList),
+  SignInLogs:signInLogs
 }

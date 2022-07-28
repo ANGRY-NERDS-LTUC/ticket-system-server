@@ -44,16 +44,6 @@ async function handleSignup(req, res, next) {
             createdAt: userRecord.createdAt,
             updatedAt: userRecord.updatedAt
         };
-        // if (output) {
-        //     let logs = await signupUsers.create({
-        //         title: `user ${output.displayName} signup`,
-        //         name: output.displayName,
-        //         email: output.email,
-        //         role: output.role,
-        //         method: "local",
-        //         date: new Date().toJSON()
-        //     });
-        // }
         res.status(201).json(output);
     } catch (e) {
         console.error(e);
@@ -77,7 +67,6 @@ async function handleSignupCompanies(req, res, next) {
         console.log({
             UuCode
         });
-        // let mailed = await Companies.sendEmail(user);
         var hashed = await Companies.beforeCreate(user);
         let userRecord = await Companies.create({
             displayName: req.body.displayName,
