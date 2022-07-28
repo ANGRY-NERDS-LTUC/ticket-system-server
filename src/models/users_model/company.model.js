@@ -56,7 +56,7 @@ const companyModel = (sequelize, DataTypes) => {
       type: DataTypes.VIRTUAL,
       get() {
         const acl = {
-          serviceProvidre: ['read'],
+          serviceProvidre: ['read', 'create', 'update'],
           admin: ['read', 'create', 'update', 'delete'],
         }
         return acl[this.role];

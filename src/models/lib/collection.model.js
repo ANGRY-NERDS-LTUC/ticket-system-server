@@ -27,15 +27,11 @@ class Collection {
     }
   }
 
-
-  async getAll(id) {
-    if (id) {
-      console.log("yyyyyyyyyyyyyyyyyyyyyy");
+  async getAll(userName) {
+    if (userName) {
       try {
         let records = await this.model.findAll({
-          where: {
-            clientId: id
-          }
+          where: { userName: userName }
         });
         return records;
       } catch (err) {
