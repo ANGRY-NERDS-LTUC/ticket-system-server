@@ -26,13 +26,25 @@ const packagesModel = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       required: true,
     },
-    publish: {
+    published: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
+    },
+    rejectedTitle: {
+      type: DataTypes.STRING,
+      required: false,
+    },
+    rejected: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: null,
     },
     createdBy: {
       type: DataTypes.STRING,
       required: true,
+    },
+    specialOffer: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     }
   });
   return packages;

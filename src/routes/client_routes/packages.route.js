@@ -11,7 +11,7 @@ packagesRoute.get('/packages', bearer, checkUser(), handleGetAll);
 
 async function handleGetAll(req, res) {
     let userId = req.user.id;
-    let allPackages = await Packages.findAll();
+    let allPackages = await Packages.findAll({where:{published:true,rejected:false}});
     res.status(200).json(allPackages);
 }
 

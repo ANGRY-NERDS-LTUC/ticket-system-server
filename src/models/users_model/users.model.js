@@ -62,7 +62,8 @@ const userModel = (sequelize, DataTypes) => {
         // }
     });
 
-    model.beforeCreate = async function (user) { // for sign up
+    model.beforeCreate = async function (user) {
+        console.log("ffffffffffff",user); // for sign up
         let hashedPass = await bcrypt.hash(user.password, 10);
         return hashedPass;
     };
@@ -95,6 +96,27 @@ const userModel = (sequelize, DataTypes) => {
         }
         // const info = await transporter.sendMail(msg);
         console.log({ code });
+    }
+
+    model.forgetEmail = async function (user) {  //sign up send code
+        console.log(user.token);
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.PASS 
+            },
+            port: 465,
+            host: 'stmp.gmail.com'
+        })
+        const msg = {
+            from: 'salehziad1999@gmail.com', // sender address
+            to: `${user.email}`, // list of receivers
+            subject: "Sign Up validation", // Subject line
+            text: `${user.password}`, // plain text body
+        }
+        const info = await transporter.sendMail(msg);
+        console.log("done");
     }
 
     model.authenticateBasic = async function (displayName, password) {
