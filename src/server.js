@@ -6,9 +6,10 @@ const signupRoutes = require('./routes/auth_routes/signup.route');
 const verifyRoute = require('./routes/auth_routes/verify.route');
 const signinRoute = require('./routes/auth_routes/signin.route');
 const adminRoutes= require('./routes/admin_routes/dashboard.route');
-const packagesRoute = require('./routes/client_routes/packages.route');
+const formRoute = require('./routes/company_routes/form.route');
 const chartRoute = require('./routes/client_routes/chart.route');
 const wishListRoute = require('./routes/client_routes/wishList.route');
+const packagesRoute = require('./routes/client_routes/packages.route');
 const notFound = require('./error/404');
 const errorHandler = require('./error/500');
 const { Server } = require('socket.io');
@@ -32,10 +33,10 @@ app.use('/auth', signupRoutes);
 app.use('/auth', verifyRoute);
 app.use('/auth', signinRoute);
 app.use('/admin',adminRoutes);
-app.use(packagesRoute);
+app.use(formRoute);
 app.use(chartRoute);
 app.use(wishListRoute);
-
+app.use(packagesRoute);
 app.use('*', notFound);
 app.use(errorHandler);
 

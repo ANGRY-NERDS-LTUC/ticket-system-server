@@ -62,9 +62,10 @@ async function handleChangePassword(req, res) {
     let password = req.body.password;
     let token=req.query.token;
     let user=await Users.findOne({where:{password:token}});
+    user.password=password;
     let hashed = await Users.beforeCreate(user);
     let updated=await Users.update({password:hashed},{where:{email:user.email}});
-    res.send(hashed)
+    res.send(updated)
 }
 
 

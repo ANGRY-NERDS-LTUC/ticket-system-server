@@ -49,8 +49,8 @@ specialOffers.belongsToMany(users, { through: 'user_specialOffers' });
 users.belongsToMany(wishList, { through: 'user_wishList' });
 wishList.belongsToMany(users, { through: 'user_wishList' });
 
-companies.hasMany(packages, { foreignKey: 'company_Id' });
-packages.belongsTo(companies);
+companies.hasMany(packages, { foreignKey: 'company_Id', sourceKey: 'id' });
+packages.belongsTo(companies, { foreignKey: 'company_Id', sourceKey: 'id' });
 
 companies.hasMany(specialOffers, { foreignKey: 'company_Id' });
 specialOffers.belongsTo(companies);

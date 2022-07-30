@@ -4,11 +4,15 @@ const adminRoutes = express.Router();
 const {
     Users
 } = require('../../models/models.connection');
-const {SignInLogs}=require('../../models/models.connection');
+const {
+    SignInLogs
+} = require('../../models/models.connection');
 const bearer = require('../../middleware/bearer');
 const checkUser = require('../../middleware/checkUser');
 const checkAdmin = require('../../middleware/checkAdmin');
-
+const {
+    Packages
+} = require('../../models/models.connection');
 // get all users
 adminRoutes.get('/users', bearer, checkUser(), checkAdmin(), getAllUsers);
 async function getAllUsers(req, res) {
@@ -32,13 +36,43 @@ async function deleteUser(req, res) {
 }
 
 // get sign in logs
-adminRoutes.get('/logs/signin',bearer,checkUser(),checkAdmin(),getSignInLos);
+adminRoutes.get('/logs/signin', bearer, checkUser(), checkAdmin(), getSignInLos);
 async function getSignInLos(req, res) {
-    let record=await SignInLogs.findAll();
+    let record = await SignInLogs.findAll();
     res.send(record);
 }
 
+adminRoutes.get('/package', bearer, checkUser(), checkAdmin(), getSignInLos);
+async function getSignInLos(req, res) {
+    let record = await Packages.findAll();
+    res.send(record);
+}
 
+adminRoutes.get('/package/published', bearer, checkUser(), checkAdmin(), getSignInLos);
+async function getSignInLos(req, res) {
+    let record = await Packages.findAll({where:{published: true}});
+    res.send(record);
+}
+
+adminRoutes.get('/package/notpublished', bearer, checkUser(), checkAdmin(), getSignInLos);
+async function getSignInLos(req, res) {
+    let record = await Packages.findAll({where:{published: false}});
+    res.send(record);
+}
+
+adminRoutes.get('/package/publish',bearer,checkUser(), checkAdmin(),publishPackage);
+async function publishPackage(req, res) {
+    let packageId = req.query.id;
+    let company_Id = req.user.id;
+    let published = await Packages.update({
+        published: true
+    }, {
+        where: {
+            id: packageId,
+        }
+    });
+    res.send(published)
+}
 
 
 

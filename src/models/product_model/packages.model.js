@@ -25,6 +25,10 @@ const packagesModel = (sequelize, DataTypes) => {
     duration: {
       type: DataTypes.INTEGER,
       required: true,
+    },
+    published: {
+      type: DataTypes.BOOLEAN,
+      defaultValue:false,
     }
   });
   return packages;
