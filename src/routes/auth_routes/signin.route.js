@@ -5,7 +5,6 @@
 const express = require('express');
 const signinRoute = express.Router();
 const basic = require('../../middleware/basic')
-<<<<<<< HEAD
 const {
     SignInLogs
 } = require('../../models/models.connection');
@@ -13,10 +12,6 @@ console.log({
     SignInLogs
 })
 signinRoute.post('/login', basic, handleSignin);
-=======
-signinRoute.post('/login', basic, handleSignin)
-
->>>>>>> staging
 async function handleSignin(req, res, next) {
     try {
         const user = {
@@ -48,10 +43,14 @@ async function handleSignin(req, res, next) {
 const {
     Users
 } = require('../../models/models.connection');
-signinRoute.post('/send/forgetPassword',handleForgetPassword);
-async function  handleForgetPassword(req, res) {
-    let email=req.body.email;
-    let user=await Users.findOne({where:{email}});
+signinRoute.post('/send/forgetPassword', handleForgetPassword);
+async function handleForgetPassword(req, res) {
+    let email = req.body.email;
+    let user = await Users.findOne({
+        where: {
+            email
+        }
+    });
     await Users.forgetEmail(user)
     // console.log(user.email);
     // console.log("before",user.password);
@@ -62,26 +61,38 @@ async function  handleForgetPassword(req, res) {
     res.send(user)
 }
 
-signinRoute.post('/hendle/forgetPassword',handleChangePassword);
+signinRoute.post('/hendle/forgetPassword', handleChangePassword);
 async function handleChangePassword(req, res) {
     let password = req.body.password;
-    let token=req.query.token;
-    let user=await Users.findOne({where:{password:token}});
-    user.password=password;
+    let token = req.query.token;
+    let user = await Users.findOne({
+        where: {
+            password: token
+        }
+    });
+    user.password = password;
     let hashed = await Users.beforeCreate(user);
-    let updated=await Users.update({password:hashed},{where:{email:user.email}});
+    let updated = await Users.update({
+        password: hashed
+    }, {
+        where: {
+            email: user.email
+        }
+    });
     res.send(updated)
 }
 
 
-const bearer=require('../../middleware/bearer');
-const checkUser=require('../../middleware/checkUser');
-const checkCompany=require('../../middleware/checkCompany');
+const bearer = require('../../middleware/bearer');
+const checkUser = require('../../middleware/checkUser');
+const checkCompany = require('../../middleware/checkCompany');
 // const { Users } = require('../../models/models.connection');
 const {
     Companies
 } = require('../../models/models.connection');
-const { uuid } = require('uuidv4');
+const {
+    uuid
+} = require('uuidv4');
 
 // signinRoute.get('/companies', bearer, checkCompany(), async (req, res) => { //localhost:5000/auth/companies?type=company
 //     //req.user.id;    
@@ -90,8 +101,8 @@ const { uuid } = require('uuidv4');
 // })
 
 
-signinRoute.get('/users',bearer,checkUser(),async (req,res)=>{ // localhost:5000/auth/users?type=client
-    let user=await Users.findAll()
+signinRoute.get('/users', bearer, checkUser(), async (req, res) => { // localhost:5000/auth/users?type=client
+    let user = await Users.findAll()
     res.send(user)
 })
 module.exports = signinRoute;

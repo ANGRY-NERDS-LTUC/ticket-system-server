@@ -5,6 +5,9 @@ const {
     Users
 } = require('../../models/models.connection');
 const {
+    Companies
+} = require('../../models/models.connection');
+const {
     SignInLogs
 } = require('../../models/models.connection');
 const bearer = require('../../middleware/bearer');
@@ -35,6 +38,21 @@ async function deleteUser(req, res) {
     deleted == 1 ? res.send('deleted') : res.send('can not delete user');
 }
 
+// delete one company
+adminRoutes.delete('/company/delete', bearer, checkUser(), checkAdmin(), deleteUser);
+async function deleteUser(req, res) {
+    let id = req.query.id;
+    let deleted = await Companies.destroy({
+        truncate: {
+            cascade: true
+        },
+        where: {
+            id
+        }
+    });
+    deleted == 1 ? res.send('deleted') : res.send('can not delete user');
+}
+
 // get sign in logs
 adminRoutes.get('/logs/signin', bearer, checkUser(), checkAdmin(), getSignInLos);
 async function getSignInLos(req, res) {
@@ -42,30 +60,64 @@ async function getSignInLos(req, res) {
     res.send(record);
 }
 
-adminRoutes.get('/package', bearer, checkUser(), checkAdmin(), getSignInLos);
-async function getSignInLos(req, res) {
+// get all packages
+adminRoutes.get('/package', bearer, checkUser(), checkAdmin(), getAllPackages);
+async function getAllPackages(req, res) {
     let record = await Packages.findAll();
     res.send(record);
 }
 
-adminRoutes.get('/package/published', bearer, checkUser(), checkAdmin(), getSignInLos);
-async function getSignInLos(req, res) {
-    let record = await Packages.findAll({where:{published: true}});
+// get published packages
+adminRoutes.get('/package/published', bearer, checkUser(), checkAdmin(), getPublishedPackeges);
+async function getPublishedPackeges(req, res) {
+    let record = await Packages.findAll({
+        where: {
+            published: true
+        }
+    });
     res.send(record);
 }
 
-adminRoutes.get('/package/notpublished', bearer, checkUser(), checkAdmin(), getSignInLos);
-async function getSignInLos(req, res) {
-    let record = await Packages.findAll({where:{published: false}});
+// get not published packages
+adminRoutes.get('/package/notpublished', bearer, checkUser(), checkAdmin(), getNotPublishedPackages);
+async function getNotPublishedPackages(req, res) {
+    let record = await Packages.findAll({
+        where: {
+            published: false
+        }
+    });
     res.send(record);
 }
 
-adminRoutes.get('/package/publish',bearer,checkUser(), checkAdmin(),publishPackage);
-async function publishPackage(req, res) {
+// accept packages
+adminRoutes.get('/package/accept', bearer, checkUser(), checkAdmin(), acceptPackage);
+async function acceptPackage(req, res) {
+    console.log("dddddddddddddddddddddddddddddddddddddddddddddd");
     let packageId = req.query.id;
     let company_Id = req.user.id;
+    let published1 = await Packages.update({
+        published: true,
+        rejected:false
+    }, {
+        where: {
+            id: packageId,
+        }
+    });
+
+    res.send("published1")
+}
+
+// regect packages
+adminRoutes.post('/package/regect', bearer, checkUser(), checkAdmin(), rejectPackage);
+async function rejectPackage(req, res) {
+    let packageId = req.query.id;
+    let {
+        rejectedTitle
+    } = req.body;
     let published = await Packages.update({
-        published: true
+        published: true,
+        rejected: true,
+        rejectedTitle
     }, {
         where: {
             id: packageId,
@@ -74,7 +126,28 @@ async function publishPackage(req, res) {
     res.send(published)
 }
 
+// get rejected packeges
+adminRoutes.get('/package/regect', bearer, checkUser(), checkAdmin(), getRejectPackage);
+async function getRejectPackage(req, res) {
+    let published = await Packages.findAll({
+        where: {
+            rejected: true,
+        }
+    });
+    res.send(published)
+}
 
+// delete packege
+adminRoutes.delete('/package/delete', bearer, checkUser(), checkAdmin(), deletePackege);
+async function deletePackege(req, res) {
+    let packageId = req.query.id;
+    let deleted = await Packages.destroy({
+        where: {
+            id:packageId
+        }
+    });
+    deleted == 1 ? res.send('deleted') : res.send('can not delete user');
+}
 
 
 
