@@ -38,6 +38,10 @@ const packagesModel = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: null,
     },
+    createdBy: {
+      type: DataTypes.STRING,
+      required: true,
+    }
   });
   return packages;
 }

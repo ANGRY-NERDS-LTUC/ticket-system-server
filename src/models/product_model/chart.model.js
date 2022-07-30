@@ -24,7 +24,15 @@ const chartModel = (sequelize, DataTypes) => {
     },
     duration: {
       type: DataTypes.INTEGER,
-      // required: true,
+      required: true,
+    },
+    publish: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    createdBy: {
+      type: DataTypes.STRING,
+      required: true,
     }
   });
 
