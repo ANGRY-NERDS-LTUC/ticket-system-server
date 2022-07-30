@@ -54,6 +54,19 @@ packages.belongsTo(companies, { foreignKey: 'company_Id', sourceKey: 'id' });
 companies.hasMany(specialOffers, { foreignKey: 'company_Id', sourceKey: 'id' });
 specialOffers.belongsTo(companies, { foreignKey: 'company_Id', sourceKey: 'id' });
 
+packages.hasMany(charts, { foreignKey: 'package_Id', sourceKey: 'id' });
+charts.belongsTo(packages, { foreignKey: 'package_Id', sourceKey: 'id' });
+
+packages.hasMany(wishList, { foreignKey: 'package_Id', sourceKey: 'id' });
+wishList.belongsTo(packages, { foreignKey: 'package_Id', sourceKey: 'id' });
+
+specialOffers.hasMany(charts, { foreignKey: 'specialOffer_Id', sourceKey: 'id' });
+charts.belongsTo(specialOffers, { foreignKey: 'specialOffer_Id', sourceKey: 'id' });
+
+specialOffers.hasMany(wishList, { foreignKey: 'specialOffer_Id', sourceKey: 'id' });
+wishList.belongsTo(specialOffers, { foreignKey: 'specialOffer_Id', sourceKey: 'id' });
+
+
 
 module.exports = {
   db: sequelize,
