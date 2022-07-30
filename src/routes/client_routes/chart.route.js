@@ -1,17 +1,14 @@
 'use strict';
 
 const express = require('express');
-const {
-    Charts
-} = require('../../models/models.connection');
-const {
-    Packages
-} = require('../../models/models.connection');
+const { Charts } = require('../../models/models.connection');
+const { Packages } = require('../../models/models.connection');
 const bearer = require('../../middleware/bearer');
 const checkUser = require('../../middleware/checkUser');
 const {
     Users
 } = require('../../models/models.connection');
+const { Socket } = require('socket.io');
 const chartRoute = express.Router();
 
 chartRoute.get('/chart', bearer, checkUser(), handleGetAll);
@@ -47,6 +44,14 @@ async function handleCreate(req, res) {
         package_Id: packages.id,
         companyId: packages.company_Id,
     });
+    let data = {
+        userId: req.user.id,
+        userName: req.user.displayName,
+        packageId: packages.id,
+        packageTitle: packages.title,
+        createdBy: packages.createdBy
+    };
+    Socket.emit('send-notification', data);
     await user.addChart(chart);
     res.status(200).json(chart);
 }
