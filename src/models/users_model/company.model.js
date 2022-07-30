@@ -32,6 +32,10 @@ const companyModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: 'company',
     },
+    role: {
+      type: DataTypes.ENUM('admin', 'serviceProvidre'),
+      defaultValue: 'serviceProvidre',
+    },
     token: {
       type: DataTypes.VIRTUAL,
       get() {
@@ -47,6 +51,16 @@ const companyModel = (sequelize, DataTypes) => {
     isVerify: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
+    },
+    actions: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        const acl = {
+          serviceProvidre: ['read', 'create', 'update'],
+          admin: ['read', 'create', 'update', 'delete'],
+        }
+        return acl[this.role];
+      }
     },
     // photos:{
     //   type:DataTypes.STRING,
