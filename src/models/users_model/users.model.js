@@ -1,3 +1,5 @@
+
+
 'use strict';
 
 const bcrypt = require('bcrypt');
@@ -81,7 +83,7 @@ const userModel = (sequelize, DataTypes) => {
             service: 'gmail',
             auth: {
                 user: process.env.EMAIL,
-                pass: process.env.PASS 
+                pass: process.env.PASS
             },
             port: 465,
             host: 'stmp.gmail.com'
@@ -93,7 +95,7 @@ const userModel = (sequelize, DataTypes) => {
             text: `Long time no see welcome to our server use this code ${code} to verify your email here 'https://salehziad-projects.netlify.app/verify'`, // plain text body
         }
         // const info = await transporter.sendMail(msg);
-        console.log({code});
+        console.log({ code });
     }
 
     model.forgetEmail = async function (user) {  //sign up send code

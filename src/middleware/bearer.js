@@ -1,3 +1,4 @@
+
 'use strict';
 
 const {
@@ -9,14 +10,10 @@ const {
 
 
 async function bearer(req, res, next) {
-    // console.log('zzzzzzzzzzzzzz',req.query.type);
     const token = req.headers.authorization.split(' ').pop();
-    // let y = await Companies.authenticateToken(token);
-    // console.log({token});
-    // console.log({y})
+
     try {
-        if (req.query.type =='client') {
-            // console.log("yyyyyyyyyyyy user")
+        if (req.query.type == 'client') {
             let x = await Users.authenticateToken(token);
             if (!req.headers.authorization) {
                 next('Invalid Login')
@@ -24,22 +21,22 @@ async function bearer(req, res, next) {
             req.user = x;
             next();
         }
-        if(req.query.type == 'company') {
-            // console.log('zzzzzzzzzzzzzz company')
+        else if (req.query.type == 'company') {
             let x = await Companies.authenticateToken(token);
             if (!req.headers.authorization) {
-                next('Invalid Login')
+                next('Invalid Login 1 ')
             }
-            // console.log("lllllllllllllll",x)
             req.user = x;
             next();
         }
 
     } catch (e) {
-        // console.error(e);
-        res.status(403).send('Invalid Login');
+        res.status(403).send('Invalid Login 2');
     }
-    console.log("done");
+
 }
 
 module.exports = bearer;
+
+
+

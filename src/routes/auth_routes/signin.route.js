@@ -5,6 +5,7 @@
 const express = require('express');
 const signinRoute = express.Router();
 const basic = require('../../middleware/basic')
+<<<<<<< HEAD
 const {
     SignInLogs
 } = require('../../models/models.connection');
@@ -12,6 +13,10 @@ console.log({
     SignInLogs
 })
 signinRoute.post('/login', basic, handleSignin);
+=======
+signinRoute.post('/login', basic, handleSignin)
+
+>>>>>>> staging
 async function handleSignin(req, res, next) {
     try {
         const user = {
@@ -78,10 +83,11 @@ const {
 } = require('../../models/models.connection');
 const { uuid } = require('uuidv4');
 
-signinRoute.post('/companies',bearer,checkCompany(),async (req,res)=>{ //localhost:5000/auth/companies?type=company
-    let user=await Companies.findAll()
-    res.send(user)
-})
+// signinRoute.get('/companies', bearer, checkCompany(), async (req, res) => { //localhost:5000/auth/companies?type=company
+//     //req.user.id;    
+//     let user = await Companies.findAll()
+//     res.send(user)
+// })
 
 
 signinRoute.get('/users',bearer,checkUser(),async (req,res)=>{ // localhost:5000/auth/users?type=client

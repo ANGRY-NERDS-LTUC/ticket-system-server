@@ -1,6 +1,6 @@
 'use strict';
-
-require('dotenv').config();
+//require('dotenv').config();
+require("dotenv").config();
 const server = require('./src/server');
 const { db } = require('./src/models/models.connection');
 

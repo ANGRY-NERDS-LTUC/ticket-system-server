@@ -27,7 +27,7 @@ let sequelizeOptions =
     } : {};
 
 const sequelize = new Sequelize(POSTGRES_URI, sequelizeOptions)
-sequelize.options.logging=false;
+sequelize.options.logging = false;
 const users = userModel(sequelize, DataTypes);
 const companies = companyModel(sequelize, DataTypes);
 const charts = chartModel(sequelize, DataTypes);
@@ -52,8 +52,8 @@ wishList.belongsToMany(users, { through: 'user_wishList' });
 companies.hasMany(packages, { foreignKey: 'company_Id', sourceKey: 'id' });
 packages.belongsTo(companies, { foreignKey: 'company_Id', sourceKey: 'id' });
 
-companies.hasMany(specialOffers, { foreignKey: 'company_Id' });
-specialOffers.belongsTo(companies);
+companies.hasMany(specialOffers, { foreignKey: 'company_Id', sourceKey: 'id' });
+specialOffers.belongsTo(companies, { foreignKey: 'company_Id', sourceKey: 'id' });
 
 
 module.exports = {

@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
 require('dotenv').config();
 const companyModel = (sequelize, DataTypes) => {
-  const model = sequelize.define('company', {
+  const model = sequelize.define('companies', {
     displayName: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -31,7 +31,7 @@ const companyModel = (sequelize, DataTypes) => {
     type: {
       type: DataTypes.STRING,
       defaultValue: 'company',
-  },
+    },
     role: {
       type: DataTypes.ENUM('admin', 'serviceProvidre'),
       defaultValue: 'serviceProvidre',
