@@ -24,6 +24,7 @@ async function handleCreate(req, res) {
     let user = req.user;
     let obj = req.body;
     obj.company_Id = user.id;
+    obj.createdBy = req.user.displayName;
     let createdOffers = await SpecialOffers.create(obj);
     await user.addSpecialoffer(createdOffers);
     res.status(201).json(createdOffers);

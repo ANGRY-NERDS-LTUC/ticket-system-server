@@ -26,20 +26,13 @@ const chartModel = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       required: true,
     },
-    role: {
-      type: DataTypes.ENUM('admin', 'client'),
-      required: true,
-      defaultValue: 'client',
+    publish: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
-    actions: {
-      type: DataTypes.VIRTUAL,
-      get() {
-        const acl = {
-          admin: ['read', 'create', 'update', 'delete'],
-          client: ['read', 'create', 'delete'],
-        };
-        return acl[this.role];
-      }
+    createdBy: {
+      type: DataTypes.STRING,
+      required: true,
     }
   });
 
