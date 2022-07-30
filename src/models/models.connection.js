@@ -6,10 +6,8 @@ const userModel = require('./users_model/users.model');
 const companyModel = require('./users_model/company.model');
 const chartModel = require('./product_model/chart.model');
 const packagesModel = require('./product_model/packages.model');
-const specialOffersModel = require('./product_model/specialOffers.model');
 const wishListModel = require('./product_model/wishList.model');
 const signInModel=require('./logs/sign-in-logs');
-const Collection = require('./lib/collection.model');
 const { options } = require('../routes/auth_routes/signup.route');
 
 const POSTGRES_URI = process.env.NODE_ENV === 'test' ? 'sqlite:memory:' : process.env.DATABASE_URL;
@@ -32,10 +30,8 @@ const users = userModel(sequelize, DataTypes);
 const companies = companyModel(sequelize, DataTypes);
 const charts = chartModel(sequelize, DataTypes);
 const packages = packagesModel(sequelize, DataTypes);
-const specialOffers = specialOffersModel(sequelize, DataTypes);
 const wishList = wishListModel(sequelize, DataTypes);
 const signInLogs=signInModel(sequelize, DataTypes);
-
 
 users.belongsToMany(packages, { through: 'user_packages' });
 packages.belongsToMany(users, { through: 'user_packages' });
@@ -43,17 +39,11 @@ packages.belongsToMany(users, { through: 'user_packages' });
 users.belongsToMany(charts, { through: 'user_chart' });
 charts.belongsToMany(users, { through: 'user_chart' });
 
-users.belongsToMany(specialOffers, { through: 'user_specialOffers' });
-specialOffers.belongsToMany(users, { through: 'user_specialOffers' });
-
 users.belongsToMany(wishList, { through: 'user_wishList' });
 wishList.belongsToMany(users, { through: 'user_wishList' });
 
 companies.hasMany(packages, { foreignKey: 'company_Id', sourceKey: 'id' });
 packages.belongsTo(companies, { foreignKey: 'company_Id', sourceKey: 'id' });
-
-companies.hasMany(specialOffers, { foreignKey: 'company_Id', sourceKey: 'id' });
-specialOffers.belongsTo(companies, { foreignKey: 'company_Id', sourceKey: 'id' });
 
 packages.hasMany(charts, { foreignKey: 'package_Id', sourceKey: 'id' });
 charts.belongsTo(packages, { foreignKey: 'package_Id', sourceKey: 'id' });
@@ -61,11 +51,7 @@ charts.belongsTo(packages, { foreignKey: 'package_Id', sourceKey: 'id' });
 packages.hasMany(wishList, { foreignKey: 'package_Id', sourceKey: 'id' });
 wishList.belongsTo(packages, { foreignKey: 'package_Id', sourceKey: 'id' });
 
-specialOffers.hasMany(charts, { foreignKey: 'specialOffer_Id', sourceKey: 'id' });
-charts.belongsTo(specialOffers, { foreignKey: 'specialOffer_Id', sourceKey: 'id' });
 
-specialOffers.hasMany(wishList, { foreignKey: 'specialOffer_Id', sourceKey: 'id' });
-wishList.belongsTo(specialOffers, { foreignKey: 'specialOffer_Id', sourceKey: 'id' });
 
 
 
@@ -73,12 +59,8 @@ module.exports = {
   db: sequelize,
   Users: users,
   Companies: companies,
-  Packages: new Collection(packages),
-  SpecialOffers: new Collection(specialOffers),
-  WishList: new Collection(wishList),
   SignInLogs:signInLogs,
   Charts: charts,
   Packages: packages,
-  SpecialOffers: specialOffers,
   WishList: wishList,
 }

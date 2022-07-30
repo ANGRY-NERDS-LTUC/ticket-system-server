@@ -28,7 +28,7 @@ const packagesModel = (sequelize, DataTypes) => {
     },
     published: {
       type: DataTypes.BOOLEAN,
-      defaultValue:false,
+      defaultValue: false,
     },
     rejectedTitle: {
       type: DataTypes.STRING,
@@ -41,6 +41,10 @@ const packagesModel = (sequelize, DataTypes) => {
     createdBy: {
       type: DataTypes.STRING,
       required: true,
+    },
+    specialOffer: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     }
   });
   return packages;

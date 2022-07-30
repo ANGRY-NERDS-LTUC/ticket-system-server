@@ -29,6 +29,7 @@ async function handleCreate(req, res) {
     let user = req.user;
     let obj = req.body;
     obj.company_Id = user.id;
+    obj.createdBy=req.user.displayName;
     let createdPackage = await Packages.create(obj);
     await user.addPackage(createdPackage);
     res.status(201).json(createdPackage);
