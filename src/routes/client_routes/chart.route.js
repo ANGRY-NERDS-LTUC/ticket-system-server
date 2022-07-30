@@ -65,7 +65,7 @@ async function handleDelete(req, res) {
         include: Charts
     })
     const paramsId = req.params.id;
-    let chartId = await user.charts.map((chart) => {
+    let chartId = await user.Charts.map((chart) => {
         if (paramsId == chart.id) {
             Charts.destroy({
                 where: {
