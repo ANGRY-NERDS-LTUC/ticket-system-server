@@ -2,7 +2,6 @@
 
 const express = require('express');
 const { Charts } = require('../../models/models.connection');
-const { SpecialOffers } = require('../../models/models.connection');
 const { Packages } = require('../../models/models.connection');
 const bearer = require('../../middleware/bearer');
 const checkUser = require('../../middleware/checkUser');
@@ -24,28 +23,9 @@ async function handleGetAll(req, res) {
 
 async function handleCreate(req, res) {
     let user = req.user;
-    // let specialOffer = await SpecialOffers.findOne({
-    //     where: { id: req.params.id },
-    // });
-
     let packages = await Packages.findOne({
         where: { id: req.params.id },
     });
-    // if (specialOffer) {
-    //     let chart = await Charts.create({
-    //         title: specialOffer.title,
-    //         description: specialOffer.description,
-    //         price: specialOffer.price,
-    //         image: specialOffer.image,
-    //         category: specialOffer.category,
-    //         duration: specialOffer.duration,
-    //         createdBy: specialOffer.createdBy,
-    //         specialOffer_Id: specialOffer.id,
-    //         companyId: specialOffer.company_Id,
-    //     });
-    //     await user.addChart(chart);
-    //     res.status(200).json(chart);
-    // } else if (packages) {
         let chart = await Charts.create({
             title: packages.title,
             description: packages.description,
@@ -60,7 +40,6 @@ async function handleCreate(req, res) {
         await user.addChart(chart);
         res.status(200).json(chart);
     }
-// }
 
 async function handleDelete(req, res) {
     let userId = req.user.id;
