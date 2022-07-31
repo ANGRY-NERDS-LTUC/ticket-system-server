@@ -74,7 +74,6 @@ const companyModel = (sequelize, DataTypes) => {
   };
 
   model.sendEmail = async function (user) {
-    // console.log("ddd",{user});
     const email = user.email;
     let userMail = await this.findOne({
       where: {
@@ -82,9 +81,6 @@ const companyModel = (sequelize, DataTypes) => {
       }
     })
     let code = userMail.uuCode;
-    console.log('email', {
-      code
-    });
     let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -100,10 +96,7 @@ const companyModel = (sequelize, DataTypes) => {
       subject: "Sign Up validation", // Subject line
       text: `Long time no see welcome to our server use this code ${code} to verify your email here 'https://salehziad-projects.netlify.app/verify'`, // plain text body
     }
-    // const info = await transporter.sendMail(msg);
-    console.log({
-      code
-    });
+    const info = await transporter.sendMail(msg);
   }
 
   model.authenticateBasic = async function (displayName, password) {
@@ -122,13 +115,11 @@ const companyModel = (sequelize, DataTypes) => {
   model.authenticateToken = async function (token) {
     try {
       const parsedToken = jwt.verify(token, process.env.SECRET);
-      console.log(parsedToken.displayName);
       const user = await this.findOne({
         where: {
           displayName: parsedToken.displayName
         }
       });
-      console.log(user);
       if (user) {
         return user;
       }
