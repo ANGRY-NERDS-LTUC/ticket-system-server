@@ -1,4 +1,3 @@
-
 'use strict';
 
 const {
@@ -20,8 +19,7 @@ async function bearer(req, res, next) {
             }
             req.user = x;
             next();
-        }
-        else if (req.query.type == 'company') {
+        } else if (req.query.type == 'company') {
             let x = await Companies.authenticateToken(token);
             if (!req.headers.authorization) {
                 next('Invalid Login 1 ')
@@ -37,6 +35,3 @@ async function bearer(req, res, next) {
 }
 
 module.exports = bearer;
-
-
-

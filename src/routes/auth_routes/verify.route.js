@@ -56,7 +56,6 @@ async function verifyCode(req, res, next) {
         }
     } catch (e) {
         res.status(500).send(`the code is not correct`)
-        console.log(e);
     }
 }
 module.exports = verifyRoute
