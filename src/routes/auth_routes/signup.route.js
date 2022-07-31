@@ -15,7 +15,7 @@ signupRoutes.post('/user/signup', handleSignup);
 async function handleSignup(req, res, next) {
     try {
         const user = req.body
-        if (Object.keys(user).length === 0) {}
+        if (Object.keys(user).length === 0) { }
         let x = user.displayName;
         if (x.length === 0) {
             res.status(403).send('no data entered')
@@ -50,11 +50,12 @@ signupRoutes.post('/companies/signup', handleSignupCompanies);
 async function handleSignupCompanies(req, res, next) {
     try {
         const user = req.body;
-        if (Object.keys(user).length === 0) {}
+        if (Object.keys(user).length === 0) { }
         let x = req.body.displayName;
         if (x.length === 0) {
             res.status(403).send('no data entered')
         }
+        let roomCode = uuidv4();
         let UuCode = uuidv4();
         var hashed = await Companies.beforeCreate(user);
         let userRecord = await Companies.create({
@@ -64,9 +65,13 @@ async function handleSignupCompanies(req, res, next) {
             password: hashed,
             phoneNumber: req.body.phoneNumber,
             role: req.body.role,
-            uuCode: UuCode
+            uuCode: UuCode,
+            roomId: roomCode
         });
         let mailed = await Companies.sendEmail(user);
+        console.log('====================================');
+        console.log(mailed);
+        console.log('====================================');
         const output = {
             displayName: userRecord.displayName,
             email: userRecord.email,
@@ -74,6 +79,7 @@ async function handleSignupCompanies(req, res, next) {
             phoneNumber: userRecord.phoneNumber,
             isVerify: userRecord.isVerify,
             role: userRecord.role,
+            roomId: userRecord.roomId,
             createdAt: userRecord.createdAt,
             updatedAt: userRecord.updatedAt
         };

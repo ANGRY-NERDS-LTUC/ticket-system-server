@@ -10,6 +10,7 @@ const chartRoute = require('./routes/client_routes/chart.route');
 const wishListRoute = require('./routes/client_routes/wishList.route');
 const packagesRoute = require('./routes/client_routes/packages.route');
 const homeRouter = require('./routes/home.route');
+const roomIdRoute = require('./routes/client_routes/roomId.route');
 const notFound = require('./error/404');
 const errorHandler = require('./error/500');
 const {
@@ -43,6 +44,7 @@ app.use('/company', companyRoute);
 app.use('/client', chartRoute);
 app.use('/client', wishListRoute);
 app.use('/client', packagesRoute);
+app.use('/client', roomIdRoute);
 app.use('/home', homeRouter);
 
 app.use('*', notFound);
