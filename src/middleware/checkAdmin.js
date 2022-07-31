@@ -3,7 +3,7 @@
 module.exports = (capability) => {
     return (req, res, next) => {
         try {
-            if (req.user.role=='admin') {
+            if (req.user.role == 'admin') {
                 next();
             } else {
                 next('Access Denied');

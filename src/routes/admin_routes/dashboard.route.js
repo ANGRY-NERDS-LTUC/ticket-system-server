@@ -92,12 +92,11 @@ async function getNotPublishedPackages(req, res) {
 // accept packages
 adminRoutes.get('/package/accept', bearer, checkUser(), checkAdmin(), acceptPackage);
 async function acceptPackage(req, res) {
-    console.log("dddddddddddddddddddddddddddddddddddddddddddddd");
     let packageId = req.query.id;
     let company_Id = req.user.id;
     let published1 = await Packages.update({
         published: true,
-        rejected:false
+        rejected: false
     }, {
         where: {
             id: packageId,
@@ -143,7 +142,7 @@ async function deletePackege(req, res) {
     let packageId = req.query.id;
     let deleted = await Packages.destroy({
         where: {
-            id:packageId
+            id: packageId
         }
     });
     deleted == 1 ? res.send('deleted') : res.send('can not delete user');
