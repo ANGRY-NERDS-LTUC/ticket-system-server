@@ -8,9 +8,6 @@ const basic = require('../../middleware/basic')
 const {
     SignInLogs
 } = require('../../models/models.connection');
-console.log({
-    SignInLogs
-})
 signinRoute.post('/login', basic, handleSignin);
 async function handleSignin(req, res, next) {
     try {
@@ -35,7 +32,6 @@ async function handleSignin(req, res, next) {
         }
 
     } catch (e) {
-        console.log(e)
         next(e);
     }
 }
@@ -52,12 +48,6 @@ async function handleForgetPassword(req, res) {
         }
     });
     await Users.forgetEmail(user)
-    // console.log(user.email);
-    // console.log("before",user.password);
-    // user.password=password;
-    // console.log("after",user.password);
-    // var hashed = await Users.beforeCreate(user);
-    // let updated=await Users.update({password:hashed},{where:{email}});
     res.send(user)
 }
 

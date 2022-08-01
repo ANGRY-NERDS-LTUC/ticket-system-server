@@ -4,8 +4,8 @@ const express = require('express');
 const signupRoutes = require('./routes/auth_routes/signup.route');
 const verifyRoute = require('./routes/auth_routes/verify.route');
 const signinRoute = require('./routes/auth_routes/signin.route');
-const adminRoutes= require('./routes/admin_routes/dashboard.route');
-const formRoute = require('./routes/company_routes/form.route');
+const adminRoutes = require('./routes/admin_routes/dashboard.route');
+const companyRoute = require('./routes/company_routes/form.route');
 const chartRoute = require('./routes/client_routes/chart.route');
 const wishListRoute = require('./routes/client_routes/wishList.route');
 const packagesRoute = require('./routes/client_routes/packages.route');
@@ -13,7 +13,9 @@ const { Purchase } = require('../src/models/models.connection');
 const homeRouter = require('./routes/home.route');
 const notFound = require('./error/404');
 const errorHandler = require('./error/500');
-const { Server } = require('socket.io');
+const {
+  Server
+} = require('socket.io');
 const cors = require('cors');
 const http = require('http');
 const path = require('path');
@@ -57,13 +59,12 @@ event.on('connection', (socket) => {
 app.use('/auth', signupRoutes);
 app.use('/auth', verifyRoute);
 app.use('/auth', signinRoute);
-app.use('/admin',adminRoutes);
-app.use(formRoute);
-app.use(chartRoute);
-app.use(wishListRoute);
-app.use(packagesRoute);
-app.use(homeRouter);
-app.use(formRoute);
+app.use('/admin', adminRoutes);
+app.use('/company', companyRoute);
+app.use('/client', chartRoute);
+app.use('/client', wishListRoute);
+app.use('/client', packagesRoute);
+app.use('/home', homeRouter);
 
 app.use('*', notFound);
 app.use(errorHandler);
