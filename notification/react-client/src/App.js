@@ -16,7 +16,7 @@ function App() {
     };
     event.emit('packages-purchased', data);
   }
-  
+
   return (
     <div className="App">
       <button onClick={handleClick}>book packages</button>

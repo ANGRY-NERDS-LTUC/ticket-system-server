@@ -8,13 +8,15 @@ const roomIdRoute = express.Router();
 
 roomIdRoute.get('/roomid', bearer, checkUser(), handleGetAll);
 
-function handleGetAll(req, res) {
-  let allCompaniesRoomId = Companies.findAll();
-  let output = {
-    displayName: allCompaniesRoomId.displayName,
-    roomId: allCompaniesRoomId.roomId,
-  }
-  res.status(200).json(allCompaniesRoomId);
+async function handleGetAll(req, res) {
+  let allCompaniesRoomId = await Companies.findAll();
+  let output = allCompaniesRoomId.map(company => {
+    return {
+      displayName: company.displayName,
+      roomId: company.roomId,
+    };
+  });
+  res.status(200).json(output);
 }
 
 module.exports = roomIdRoute;
