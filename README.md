@@ -22,4 +22,4 @@ And the app provide a service for the users to contact the support team for any 
 
 ## DataBase Diagram
 
-![Relations](./asset/database_diagram.png)
+![Relations](./asset/database-diagram.png)
