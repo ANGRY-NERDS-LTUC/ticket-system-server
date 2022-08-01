@@ -8,19 +8,19 @@ const chartModel = (sequelize, DataTypes) => {
     },
     description: {
       type: DataTypes.STRING,
-      // required: true,
+      required: true,
     },
     price: {
       type: DataTypes.INTEGER,
-      // required: true,
+      required: true,
     },
     image: {
       type: DataTypes.STRING,
-      // required: true,
+      required: true,
     },
     category: {
       type: DataTypes.STRING,
-      // required: true,
+      required: true,
     },
     duration: {
       type: DataTypes.INTEGER,
