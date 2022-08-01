@@ -69,9 +69,6 @@ async function handleSignupCompanies(req, res, next) {
             roomId: roomCode
         });
         let mailed = await Companies.sendEmail(user);
-        console.log('====================================');
-        console.log(mailed);
-        console.log('====================================');
         const output = {
             displayName: userRecord.displayName,
             email: userRecord.email,

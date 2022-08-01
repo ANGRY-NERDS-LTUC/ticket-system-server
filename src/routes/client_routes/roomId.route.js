@@ -6,12 +6,14 @@ const bearer = require('../../middleware/bearer');
 const checkUser = require('../../middleware/checkUser');
 const roomIdRoute = express.Router();
 
-roomIdRoute.get('/roomid', bearer, checkUser, handleGetAll);
+roomIdRoute.get('/roomid', bearer, checkUser(), handleGetAll);
 
 function handleGetAll(req, res) {
-  let allCompaniesRoomId = Companies.findAll({
-    attributes: ['displayName', 'roomId'],
-  });
+  let allCompaniesRoomId = Companies.findAll();
+  let output = {
+    displayName: allCompaniesRoomId.displayName,
+    roomId: allCompaniesRoomId.roomId,
+  }
   res.status(200).json(allCompaniesRoomId);
 }
 

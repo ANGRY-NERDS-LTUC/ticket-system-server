@@ -19,14 +19,14 @@ const POSTGRES_URI = process.env.NODE_ENV === 'test' ? 'sqlite:memory:' : proces
 
 let sequelizeOptions =
   process.env.NODE_ENV === "production" ?
-  {
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
+    {
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
       },
-    },
-  } : {};
+    } : {};
 
 const sequelize = new Sequelize(POSTGRES_URI, sequelizeOptions)
 sequelize.options.logging = false;
@@ -84,8 +84,6 @@ wishList.belongsTo(packages, {
   foreignKey: 'package_Id',
   sourceKey: 'id'
 });
-
-
 
 
 
