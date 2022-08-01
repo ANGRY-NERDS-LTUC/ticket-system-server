@@ -81,9 +81,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on("send_message", (data) => {
-    console.log('====================================');
-    console.log(`User with ID: ${socket.id} sent message: ${data.message}`);
-    console.log('====================================');
     socket.to(data.room).emit("receive_message", data);
   });
 
