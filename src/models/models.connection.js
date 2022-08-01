@@ -7,6 +7,7 @@ const companyModel = require('./users_model/company.model');
 const chartModel = require('./product_model/chart.model');
 const packagesModel = require('./product_model/packages.model');
 const wishListModel = require('./product_model/wishList.model');
+const purchaseModel = require('./product_model/purchase.model')
 const signInModel=require('./logs/sign-in-logs');
 const { options } = require('../routes/auth_routes/signup.route');
 
@@ -31,6 +32,7 @@ const companies = companyModel(sequelize, DataTypes);
 const charts = chartModel(sequelize, DataTypes);
 const packages = packagesModel(sequelize, DataTypes);
 const wishList = wishListModel(sequelize, DataTypes);
+const purchase = purchaseModel(sequelize, DataTypes);
 const signInLogs=signInModel(sequelize, DataTypes);
 
 users.belongsToMany(packages, { through: 'user_packages' });
@@ -63,4 +65,5 @@ module.exports = {
   Charts: charts,
   Packages: packages,
   WishList: wishList,
+  Purchase: purchase
 }
