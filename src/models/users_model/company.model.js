@@ -77,31 +77,32 @@ const companyModel = (sequelize, DataTypes) => {
     return hashedPass;
   };
 
-  model.sendEmail = async function (user) {
+  model.sendEmail = async function (user) { //sign up send code
     const email = user.email;
+    console.log({email});
     let userMail = await this.findOne({
-      where: {
-        email: email
-      }
+        where: {
+            email: email
+        }
     })
     let code = userMail.uuCode;
     let transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASS
-      },
-      port: 465,
-      host: 'stmp.gmail.com'
+        service: 'gmail',
+        auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASS
+        },
+        port: 465,
+        host: 'stmp.gmail.com'
     })
     const msg = {
-      from: 'salehziad1999@gmail.com', // sender address
-      to: `${email}`, // list of receivers
-      subject: "Sign Up validation", // Subject line
-      text: `Long time no see welcome to our server use this code ${code} to verify your email here 'https://salehziad-projects.netlify.app/verify'`, // plain text body
+        from: 'salehziad1999@gmail.com', // sender address
+        to: `${email}`, // list of receivers
+        subject: "Sign Up validation", // Subject line
+        text: `Long time no see welcome to our server use this code ${code} to verify your email here 'https://salehziad-projects.netlify.app/verify'`, // plain text body
     }
     const info = await transporter.sendMail(msg);
-  }
+}
 
   model.authenticateBasic = async function (displayName, password) {
     const user = await this.findOne({
