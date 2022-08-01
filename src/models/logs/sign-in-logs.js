@@ -1,5 +1,5 @@
 const signInModel = (sequelize, DataTypes) =>
-    sequelize.define('xxxxxxxxxxxxxx', {
+    sequelize.define('signinlogs', {
         title: {
             type: DataTypes.STRING,
             allowNull: false,

@@ -28,6 +28,10 @@ const companyModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    roomId: {
+      type: DataTypes.STRING,
+      required: true,
+    },
     type: {
       type: DataTypes.STRING,
       defaultValue: 'company',
