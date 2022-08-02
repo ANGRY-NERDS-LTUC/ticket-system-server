@@ -180,12 +180,9 @@ For production environments...
 
 MIT
 
-
-
-
 ## UML Diagram
 
-![Mid Project](./asset/UML.MidProject.png)
+![Mid Project](./asset/UML-MID-PROJECT.jpeg)
 
 ## DataBase Diagram
 
