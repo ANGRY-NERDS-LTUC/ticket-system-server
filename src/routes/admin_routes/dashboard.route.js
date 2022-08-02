@@ -1,21 +1,15 @@
 'use strict';
 const express = require('express');
 const adminRoutes = express.Router();
-const {
-    Users
-} = require('../../models/models.connection');
-const {
-    Companies
-} = require('../../models/models.connection');
-const {
-    SignInLogs
-} = require('../../models/models.connection');
+const { Users } = require('../../models/models.connection');
+const { Companies } = require('../../models/models.connection');
+const { SignInLogs } = require('../../models/models.connection');
 const bearer = require('../../middleware/bearer');
 const checkUser = require('../../middleware/checkUser');
 const checkAdmin = require('../../middleware/checkAdmin');
-const {
-    Packages
-} = require('../../models/models.connection');
+const { Packages } = require('../../models/models.connection');
+const { Purchase } = require('../../models/models.connection');
+
 // get all users
 adminRoutes.get('/users', bearer, checkUser(), checkAdmin(), getAllUsers);
 async function getAllUsers(req, res) {
@@ -107,7 +101,7 @@ async function acceptPackage(req, res) {
 }
 
 // regect packages
-adminRoutes.post('/package/regect', bearer, checkUser(), checkAdmin(), rejectPackage);
+adminRoutes.post('/package/reject', bearer, checkUser(), checkAdmin(), rejectPackage);
 async function rejectPackage(req, res) {
     let packageId = req.query.id;
     let {
@@ -126,7 +120,7 @@ async function rejectPackage(req, res) {
 }
 
 // get rejected packeges
-adminRoutes.get('/package/regect', bearer, checkUser(), checkAdmin(), getRejectPackage);
+adminRoutes.get('/package/reject', bearer, checkUser(), checkAdmin(), getRejectPackage);
 async function getRejectPackage(req, res) {
     let published = await Packages.findAll({
         where: {
@@ -148,10 +142,20 @@ async function deletePackege(req, res) {
     deleted == 1 ? res.send('deleted') : res.send('can not delete user');
 }
 
-
-
-
-
-
+// get packages in purchase model
+adminRoutes.get('/package/purchase', bearer, checkUser(), checkAdmin(), getPurchasePackeges);
+async function getPurchasePackeges(req, res) {
+    let purchasePackages = await Purchase.findAll();
+    let output = purchasePackages.map((onePackage) => {
+        return {
+            userName: onePackage.userName,
+            userId: onePackage.userId,
+            packageName: onePackage.packageTitle,
+            packageId: onePackage.packageId,
+            companyName: onePackage.createdBy
+        }
+    })
+    res.status(200).json(output);
+}
 
 module.exports = adminRoutes;

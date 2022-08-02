@@ -1,15 +1,9 @@
 'use strict';
-const {
-    Users
-} = require('../../models/models.connection');
-const {
-    Companies
-} = require('../../models/models.connection');
+const { Users } = require('../../models/models.connection');
+const { Companies } = require('../../models/models.connection');
 const express = require('express')
 const signupRoutes = express.Router();
-const {
-    v4: uuidv4
-} = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 signupRoutes.post('/user/signup', handleSignup);
 async function handleSignup(req, res, next) {

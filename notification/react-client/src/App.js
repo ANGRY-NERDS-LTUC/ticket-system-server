@@ -8,10 +8,10 @@ function App() {
   function handleClick() {
     console.log('haimour');
     let data = {
-      userId: 1,
-      userName: "ahmad",
-      packageId: 1,
-      packageTitle: "spain",
+      userId: 3,
+      userName: "haimour",
+      packageId: 8,
+      packageTitle: "italy",
       createdBy: "al-dallah"
     };
     event.emit('packages-purchased', data);

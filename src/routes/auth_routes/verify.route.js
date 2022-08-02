@@ -1,10 +1,6 @@
 'use strict';
-const {
-    Users
-} = require('../../models/models.connection');
-const {
-    Companies
-} = require('../../models/models.connection');
+const { Users } = require('../../models/models.connection');
+const { Companies } = require('../../models/models.connection');
 const express = require('express');
 const verifyRoute = express.Router();
 verifyRoute.post('/verify', verifyCode);

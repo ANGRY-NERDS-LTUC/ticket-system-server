@@ -5,9 +5,7 @@
 const express = require('express');
 const signinRoute = express.Router();
 const basic = require('../../middleware/basic')
-const {
-    SignInLogs
-} = require('../../models/models.connection');
+const { SignInLogs } = require('../../models/models.connection');
 signinRoute.post('/login', basic, handleSignin);
 async function handleSignin(req, res, next) {
     try {
@@ -80,9 +78,7 @@ const checkCompany = require('../../middleware/checkCompany');
 const {
     Companies
 } = require('../../models/models.connection');
-const {
-    uuid
-} = require('uuidv4');
+const { uuid } = require('uuidv4');
 
 // signinRoute.get('/companies', bearer, checkCompany(), async (req, res) => { //localhost:5000/auth/companies?type=company
 //     //req.user.id;    

@@ -1,11 +1,7 @@
 'use strict';
 
-const {
-    Users
-} = require("../models/models.connection");
-const {
-    Companies
-} = require("../models/models.connection");
+const { Users } = require("../models/models.connection");
+const { Companies } = require("../models/models.connection");
 
 
 async function bearer(req, res, next) {
