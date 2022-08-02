@@ -33,8 +33,8 @@ async function deleteUser(req, res) {
 }
 
 // delete one company
-adminRoutes.delete('/company/delete', bearer, checkUser(), checkAdmin(), deleteUser);
-async function deleteUser(req, res) {
+adminRoutes.delete('/company/delete', bearer, checkUser(), checkAdmin(), deleteCompany);
+async function deleteCompany(req, res) {
     let id = req.query.id;
     let deleted = await Companies.destroy({
         truncate: {

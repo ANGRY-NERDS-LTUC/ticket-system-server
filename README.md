@@ -24,11 +24,11 @@ And the website provide a service for the users to contact the support team for 
 - .env - contains env variables (should be git ignored)
 - .gitignore - contains a .gitignore file
 - package.json - contains npm package config
-    - create a test script for running tests
-    - create a start script for running your server
+  - create a test script for running tests
+  - create a start script for running your server
 - index.js - the entry point for your application
 - src/ - contains your core application files and folders and server file which contains the main server
-- __test__/ - contains unit tests
+- **test**/ - contains unit tests
 - asset - contains images
 - client - contains files for chat system
 - notification - contain files for notification system
@@ -66,101 +66,99 @@ admins - READ/CREATE/UPDATE/DELETE
 
 ## Routes
 
-
 ## Auth Routes
 
-| method      |                      path           |   Description            |
-| ----------- | ------------------------------------|--------------------------|
-|    POST     |  /auth/user/signup                           | Signup client account    |
-|    POST     |  /auth/companies/signup                           | Signup company account    |
-|    POST     |  /auth/verify                                      | verify account    |
-|    POST     |  /auth/login                                       |     Signin account    |
-|    POST     |  /auth/send/forgetPassword                         |     forget password    |
-|    POST     |  /auth/hendle/forgetPassword?token=tokenValue      |     update password    |
-|    GET     |  /auth/users   |     get user    |
+| method | path                                         | Description            |
+| ------ | -------------------------------------------- | ---------------------- |
+| POST   | /auth/user/signup                            | Signup client account  |
+| POST   | /auth/companies/signup                       | Signup company account |
+| POST   | /auth/verify                                 | verify account         |
+| POST   | /auth/login                                  | Signin account         |
+| POST   | /auth/send/forgetPassword                    | forget password        |
+| POST   | /auth/hendle/forgetPassword?token=tokenValue | update password        |
+| GET    | /auth/users                                  | get user               |
 
 ## Admin Routes
 
 ### Packages
 
-| method      |                      path           |   Description            |
-| ----------- | ------------------------------------|--------------------------|
-|    GET     |  /admin/package/accept?type=client&id=idForThePackage| accept package to publish |
-|    GET     |  /admin/package?type=client                         | get all packages  |
-|    GET     |  /admin/package/published?type=client         | get published packages   |
-|    GET     |  /admin/package/notpublished?type=client      |     get not published packages |
-|    POST     |  /admin/package/reject?type=client&id=idForThePackage  | reject package |
-|    GET     |  /admin/package/reject?type=client     |     get rejected packages |
-|    DELETE     |  /admin/package/delete?type=client&id=idForThePackage |  delete package |
-|    GET     |  /admin/package/purchase?type=client |  get all purchased packages |
+| method | path                                                 | Description                |
+| ------ | ---------------------------------------------------- | -------------------------- |
+| GET    | /admin/package/accept?type=client&id=idForThePackage | accept package to publish  |
+| GET    | /admin/package?type=client                           | get all packages           |
+| GET    | /admin/package/published?type=client                 | get published packages     |
+| GET    | /admin/package/notpublished?type=client              | get not published packages |
+| POST   | /admin/package/reject?type=client&id=idForThePackage | reject package             |
+| GET    | /admin/package/reject?type=client                    | get rejected packages      |
+| DELETE | /admin/package/delete?type=client&id=idForThePackage | delete package             |
+| GET    | /admin/package/purchase?type=client                  | get all purchased packages |
 
 ### Users
 
-| method      |                      path           |   Description            |
-| ----------- | ------------------------------------|--------------------------|
-|    GET     |  /admin/users?type=client   | get all users |
-|    DELETE     |  /admin/user/delete?type=client&id=idForTheUser      | delete user  |
-|    DELETE     |  /admin/company/delete?type=client&id=idForTheCompany  | delete company   |
+| method | path                                                 | Description    |
+| ------ | ---------------------------------------------------- | -------------- |
+| GET    | /admin/users?type=client                             | get all users  |
+| DELETE | /admin/user/delete?type=client&id=idForTheUser       | delete user    |
+| DELETE | /admin/company/delete?type=client&id=idForTheCompany | delete company |
 
 ### Logs
 
-| method      |                      path           |   Description            |
-| ----------- | ------------------------------------|--------------------------|
-|    GET     |  /admin/logs/signin?type=client  | sign-in logs |
+| method | path                           | Description  |
+| ------ | ------------------------------ | ------------ |
+| GET    | /admin/logs/signin?type=client | sign-in logs |
 
 ## Company Routes
 
-| method      |                      path           |   Description            |
-| ----------- | ------------------------------------|--------------------------|
-|    CREATE     |  /company/create?type=company | create a package or special offer |
-|    DELETE     |  /company/package/delete/idForTheCompany?type=company  | delete company account  |
-|    GET     |  /company/packages?type=company  | get all packages for company   |
-|    GET     |  /company/packages/accepted?type=company  | get accepted packages for company   |
-|    GET     |  /company/packages/rejected?type=company  | get rejected packages for company   |
+| method | path                                                 | Description                       |
+| ------ | ---------------------------------------------------- | --------------------------------- |
+| CREATE | /company/create?type=company                         | create a package or special offer |
+| DELETE | /company/package/delete/idForTheCompany?type=company | delete company account            |
+| GET    | /company/packages?type=company                       | get all packages for company      |
+| GET    | /company/packages/accepted?type=company              | get accepted packages for company |
+| GET    | /company/packages/rejected?type=company              | get rejected packages for company |
 
 ## User Routes
 
 ### Chart
 
-| method      |                      path           |   Description            |
-| ----------- | ------------------------------------|--------------------------|
-|    CREATE     |  /client/chart/:idForPAckage?type=client | put a package on chart |
-|    DELETE     |  /client/chart/:idForPAckage?type=client | remove package from chart  |
-|    GET     |  /client/chart?type=client  | get all packages in chart   |
+| method | path                                    | Description               |
+| ------ | --------------------------------------- | ------------------------- |
+| CREATE | /client/chart/:idForPAckage?type=client | put a package on chart    |
+| DELETE | /client/chart/:idForPAckage?type=client | remove package from chart |
+| GET    | /client/chart?type=client               | get all packages in chart |
 
 ### WishList
 
-| method      |                      path           |   Description            |
-| ----------- | ------------------------------------|--------------------------|
-|    CREATE     |  /client/wishlist/:idForPAckage?type=client | put a package on wishlist |
-|    DELETE     |  /client/wishlist/:idForPAckage?type=client | remove package from wishlist  |
-|    GET     |  /client/wishlist?type=client  | get all packages in wishlist   |
+| method | path                                       | Description                  |
+| ------ | ------------------------------------------ | ---------------------------- |
+| CREATE | /client/wishlist/:idForPAckage?type=client | put a package on wishlist    |
+| DELETE | /client/wishlist/:idForPAckage?type=client | remove package from wishlist |
+| GET    | /client/wishlist?type=client               | get all packages in wishlist |
 
 ### Chat
 
-| method      |                      path           |   Description            |
-| ----------- | ------------------------------------|--------------------------|
-|    GET     |  /client/roomid?type=client | get rooms id for chatting with companies |
+| method | path                       | Description                              |
+| ------ | -------------------------- | ---------------------------------------- |
+| GET    | /client/roomid?type=client | get rooms id for chatting with companies |
 
 ### Packages
 
-| method      |                      path           |   Description            |
-| ----------- | ------------------------------------|--------------------------|
-|    GET     |  /client/packages?type=client | get all packages |
-
+| method | path                         | Description      |
+| ------ | ---------------------------- | ---------------- |
+| GET    | /client/packages?type=client | get all packages |
 
 ### Special Offers
 
-| method      |                      path           |   Description            |
-| ----------- | ------------------------------------|--------------------------|
-|    GET     |  /client/specialOffers?type=client | get all special offers packages |
+| method | path                              | Description                     |
+| ------ | --------------------------------- | ------------------------------- |
+| GET    | /client/specialOffers?type=client | get all special offers packages |
 
 ## Home Routes
 
-| method      |                      path           |   Description            |
-| ----------- | ------------------------------------|--------------------------|
-|    GET     |  /home/packages | get all packages |
-|    GET     |  /home/specialOffers | get all special offers packages |
+| method | path                | Description                     |
+| ------ | ------------------- | ------------------------------- |
+| GET    | /home/packages      | get all packages                |
+| GET    | /home/specialOffers | get all special offers packages |
 
 ## Installation
 

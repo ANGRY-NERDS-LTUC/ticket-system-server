@@ -18,8 +18,8 @@ let user = {
   displayName: 'bahaa',
   email: 'bahaanimer97@gmail.com',
   password: '123456',
-  isVerify: true,
-  uuCode: uuCode,
+  // isVerify: true,
+  // uuCode: uuCode,
 }
 
 beforeAll(async () => {
@@ -32,7 +32,7 @@ describe('Server Test', () => {
       displayName: user.displayName,
       email: user.email,
       password: user.password,
-      isVerify: user.isVerify,
+      // isVerify: user.isVerify,
     });
     console.log(response.body);
     expect(response.status).toBe(201);
