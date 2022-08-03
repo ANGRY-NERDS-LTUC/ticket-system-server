@@ -57,7 +57,7 @@ event.on('connection', (socket) => {
 
 
 app.get('/',(req,res)=>{
-  res.send('Welcome to TICKETCOM')
+  res.send('Welcome to TicketCom')
 })
 app.use('/auth', signupRoutes);
 app.use('/auth', verifyRoute);
