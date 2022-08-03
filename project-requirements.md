@@ -20,8 +20,8 @@ project requirements
 > table many users can have many offers
 
 1. list of the offers display information
-2. add to wish and delete and add to chart >> table one to many
-3. add to chart delete pay >> table one to many
+2. add to wish and delete and add to cart >> table one to many
+3. add to cart delete pay >> table one to many
 4. on each ticket add feedback--sequelize array
 5. edit profile
 6. contact us

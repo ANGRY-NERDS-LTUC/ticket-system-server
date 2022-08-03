@@ -1,7 +1,7 @@
 'use strict';
 
-const chartModel = (sequelize, DataTypes) => {
-  const chart = sequelize.define('Chart', {
+const cartModel = (sequelize, DataTypes) => {
+  const cart = sequelize.define('Cart', {
     title: {
       type: DataTypes.STRING,
       required: true,
@@ -36,7 +36,7 @@ const chartModel = (sequelize, DataTypes) => {
     }
   });
 
-  return chart;
+  return cart;
 }
 
-module.exports = chartModel;
+module.exports = cartModel;

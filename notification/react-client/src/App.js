@@ -6,7 +6,6 @@ function App() {
   const event = socket.connect('http://localhost:5000/purchase');
 
   function handleClick() {
-    console.log('haimour');
     let data = {
       userId: 3,
       userName: "haimour",

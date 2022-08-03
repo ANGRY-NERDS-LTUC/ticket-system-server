@@ -1,26 +1,26 @@
 'use strict';
 
 const express = require('express');
-const { Charts } = require('../../models/models.connection');
+const { Carts } = require('../../models/models.connection');
 const { Packages } = require('../../models/models.connection');
 const bearer = require('../../middleware/bearer');
 const checkUser = require('../../middleware/checkUser');
 const { Users } = require('../../models/models.connection');
-const chartRoute = express.Router();
+const cartRoute = express.Router();
 
-chartRoute.get('/chart', bearer, checkUser(), handleGetAll);
-chartRoute.post('/chart/:id', bearer, checkUser(), handleCreate);
-chartRoute.delete('/chart/:id', bearer, checkUser(), handleDelete);
+cartRoute.get('/cart', bearer, checkUser(), handleGetAll);
+cartRoute.post('/cart/:id', bearer, checkUser(), handleCreate);
+cartRoute.delete('/cart/:id', bearer, checkUser(), handleDelete);
 
 async function handleGetAll(req, res) {
     let userId = req.user.id;
-    let allCharts = await Users.findOne({
+    let allCarts = await Users.findOne({
         where: {
             id: userId
         },
-        include: Charts
+        include: Carts
     })
-    res.status(200).json(allCharts);
+    res.status(200).json(allCarts);
 }
 
 async function handleCreate(req, res) {
@@ -30,7 +30,7 @@ async function handleCreate(req, res) {
             id: req.params.id
         },
     });
-    let chart = await Charts.create({
+    let cart = await Carts.create({
         title: packages.title,
         description: packages.description,
         price: packages.price,
@@ -41,8 +41,8 @@ async function handleCreate(req, res) {
         package_Id: packages.id,
         companyId: packages.company_Id,
     });
-    await user.addChart(chart);
-    res.status(200).json(chart);
+    await user.addCart(cart);
+    res.status(200).json(cart);
 }
 
 async function handleDelete(req, res) {
@@ -51,12 +51,12 @@ async function handleDelete(req, res) {
         where: {
             id: userId
         },
-        include: Charts
+        include: Carts
     })
     const paramsId = req.params.id;
-    let chartId = await user.Charts.map((chart) => {
-        if (paramsId == chart.id) {
-            Charts.destroy({
+    let cartId = await user.Carts.map((cart) => {
+        if (paramsId == cart.id) {
+            Carts.destroy({
                 where: {
                     id: paramsId
                 },
@@ -64,7 +64,7 @@ async function handleDelete(req, res) {
             return 'package successfully deleted';
         }
     });
-    res.status(200).send(chartId);
+    res.status(200).send(cartId);
 }
 
-module.exports = chartRoute;
+module.exports = cartRoute;

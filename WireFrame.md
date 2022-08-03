@@ -8,9 +8,9 @@
 
 ![AdminPackges](./asset/AdminPackges.PNG)
 
-## Chart
+## Cart
 
-![Chart](./asset/Chart.PNG)
+![Cart](./asset/Cart.PNG)
 
 ## Chat
 
@@ -22,11 +22,11 @@
 
 ## ClientHome
 
-![ClientHome](./asset/ClientHome1.PNG)
+![ClientHome](./asset/ClientHome.PNG)
 
 ## ClientPackages
 
-![ClientPackages](./asset/ClientPackages.PNG)
+![ClientPackages](./asset/ClientPackges.PNG)
 
 ## CompanyHome
 
@@ -38,7 +38,7 @@
 
 ## CompanyRoomID
 
-![CompanyRoomID](./asset/CompanyRoomID.PNG)
+![CompanyRoomID](./asset/CompanyRoom.PNG)
 
 ## CreateOffer
 
@@ -50,7 +50,7 @@
 
 ## DetailsSpecialOffer
 
-![DetailsSpecialOffer](./asset/DetailsSpecialOffer.PNG)
+![DetailsSpecialOffer](./asset/SpecialOffer.PNG)
 
 ## Form
 
