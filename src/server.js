@@ -56,7 +56,9 @@ event.on('connection', (socket) => {
 });
 
 
-
+app.get('/',(req,res)=>{
+  res.send('Welcome to TICKetCOM')
+})
 app.use('/auth', signupRoutes);
 app.use('/auth', verifyRoute);
 app.use('/auth', signinRoute);
