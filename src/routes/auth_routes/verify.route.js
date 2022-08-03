@@ -1,6 +1,10 @@
 'use strict';
-const { Users } = require('../../models/models.connection');
-const { Companies } = require('../../models/models.connection');
+const {
+    Users
+} = require('../../models/models.connection');
+const {
+    Companies
+} = require('../../models/models.connection');
 const express = require('express');
 const verifyRoute = express.Router();
 verifyRoute.post('/verify', verifyCode);
@@ -52,6 +56,7 @@ async function verifyCode(req, res, next) {
         }
     } catch (e) {
         res.status(500).send(`the code is not correct`)
+        console.log(e);
     }
 }
 module.exports = verifyRoute

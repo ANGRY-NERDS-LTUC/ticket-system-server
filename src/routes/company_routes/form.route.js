@@ -46,7 +46,8 @@ async function getAcceptedPackages(req, res) {
     let allPackages = await Packages.findAll({
         where: {
             company_Id,
-            published: true
+            published: true,
+            rejected:false
         }
     });
     res.status(200).json(allPackages);
