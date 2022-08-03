@@ -121,11 +121,11 @@ admins - READ/CREATE/UPDATE/DELETE
 
 ### Chart
 
-| method | path                                    | Description               |
-| ------ | --------------------------------------- | ------------------------- |
-| CREATE | /client/chart/:idForPAckage?type=client | put a package on chart    |
-| DELETE | /client/chart/:idForPAckage?type=client | remove package from chart |
-| GET    | /client/chart?type=client               | get all packages in chart |
+| method | path                                   | Description              |
+| ------ | -------------------------------------- | ------------------------ |
+| CREATE | /client/cart/:idForPAckage?type=client | put a package on cart    |
+| DELETE | /client/cart/:idForPAckage?type=client | remove package from cart |
+| GET    | /client/cart?type=client               | get all packages in cart |
 
 ### WishList
 
@@ -180,11 +180,11 @@ MIT
 
 ## UML Diagram
 
-![Mid Project](./asset/UML-MID-PROJECT.jpeg)
+![Mid Project](./asset/uml-diagram.png)
 
 ## DataBase Diagram
 
-![Relations](./asset/database-diagram.png)
+![Relations](./asset/databaseDiagram.png)
 
 ## WireFrame
 

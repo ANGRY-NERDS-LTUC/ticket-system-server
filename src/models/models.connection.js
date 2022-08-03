@@ -7,7 +7,7 @@ const {
 } = require('sequelize');
 const userModel = require('./users_model/users.model');
 const companyModel = require('./users_model/company.model');
-const chartModel = require('./product_model/chart.model');
+const cartModel = require('./product_model/cart.model');
 const packagesModel = require('./product_model/packages.model');
 const wishListModel = require('./product_model/wishList.model');
 const purchaseModel = require('./product_model/purchase.model')
@@ -31,7 +31,7 @@ const sequelize = new Sequelize(POSTGRES_URI, sequelizeOptions)
 sequelize.options.logging = false;
 const users = userModel(sequelize, DataTypes);
 const companies = companyModel(sequelize, DataTypes);
-const charts = chartModel(sequelize, DataTypes);
+const carts = cartModel(sequelize, DataTypes);
 const packages = packagesModel(sequelize, DataTypes);
 const wishList = wishListModel(sequelize, DataTypes);
 const purchase = purchaseModel(sequelize, DataTypes);
@@ -44,11 +44,11 @@ packages.belongsToMany(users, {
   through: 'user_packages'
 });
 
-users.belongsToMany(charts, {
-  through: 'user_chart'
+users.belongsToMany(carts, {
+  through: 'user_cart'
 });
-charts.belongsToMany(users, {
-  through: 'user_chart'
+carts.belongsToMany(users, {
+  through: 'user_cart'
 });
 
 users.belongsToMany(wishList, {
@@ -67,11 +67,11 @@ packages.belongsTo(companies, {
   sourceKey: 'id'
 });
 
-packages.hasMany(charts, {
+packages.hasMany(carts, {
   foreignKey: 'package_Id',
   sourceKey: 'id'
 });
-charts.belongsTo(packages, {
+carts.belongsTo(packages, {
   foreignKey: 'package_Id',
   sourceKey: 'id'
 });
@@ -92,7 +92,7 @@ module.exports = {
   Users: users,
   Companies: companies,
   SignInLogs: signInLogs,
-  Charts: charts,
+  Carts: carts,
   Packages: packages,
   WishList: wishList,
   Purchase: purchase
