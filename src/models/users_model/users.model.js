@@ -60,12 +60,12 @@ const userModel = (sequelize, DataTypes) => {
         // }
     });
 
-    model.beforeCreate = async function (user) { // for sign up
+    model.beforeCreate = async function (user) {
         let hashedPass = await bcrypt.hash(user.password, 10);
         return hashedPass;
     };
 
-    model.sendEmail = async function (user) {  //sign up send code
+    model.sendEmail = async function (user) { //sign up send code
         const email = user.email;
         let userMail = await this.findOne({
             where: {
@@ -73,14 +73,11 @@ const userModel = (sequelize, DataTypes) => {
             }
         })
         let code = userMail.uuCode;
-        console.log('email', {
-            code
-        });
         let transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
                 user: process.env.EMAIL,
-                pass: process.env.PASS 
+                pass: process.env.PASS
             },
             port: 465,
             host: 'stmp.gmail.com'
@@ -89,10 +86,28 @@ const userModel = (sequelize, DataTypes) => {
             from: 'salehziad1999@gmail.com', // sender address
             to: `${email}`, // list of receivers
             subject: "Sign Up validation", // Subject line
-            text: `Long time no see welcome to our server use this code ${code} to verify your email here 'https://salehziad-projects.netlify.app/verify'`, // plain text body
+            text: `Thank you for sign up in our website  use this code ${code} to verify your email`, // plain text body
         }
-        // const info = await transporter.sendMail(msg);
-        console.log({code});
+        const info = await transporter.sendMail(msg);
+    }
+
+    model.forgetEmail = async function (user) { //sign up send code
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.PASS
+            },
+            port: 465,
+            host: 'stmp.gmail.com'
+        })
+        const msg = {
+            from: 'salehziad1999@gmail.com', // sender address
+            to: `${user.email}`, // list of receivers
+            subject: "Sign Up validation", // Subject line
+            text: `${user.password}`, // plain text body
+        }
+        const info = await transporter.sendMail(msg);
     }
 
     model.authenticateBasic = async function (displayName, password) {

@@ -3,7 +3,7 @@
 module.exports = (capability) => {
     return (req, res, next) => {
         try {
-            if (req.user.type=='client') {
+            if (req.user.type == 'client') {
                 next();
             } else {
                 next('Access Denied');

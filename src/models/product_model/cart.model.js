@@ -1,7 +1,7 @@
 'use strict';
 
-const specialOffersModel = (sequelize, DataTypes) => {
-  const specialOffers = sequelize.define('specialOffers', {
+const cartModel = (sequelize, DataTypes) => {
+  const cart = sequelize.define('Cart', {
     title: {
       type: DataTypes.STRING,
       required: true,
@@ -25,9 +25,18 @@ const specialOffersModel = (sequelize, DataTypes) => {
     duration: {
       type: DataTypes.INTEGER,
       required: true,
+    },
+    publish: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    createdBy: {
+      type: DataTypes.STRING,
+      required: true,
     }
   });
-  return specialOffers;
+
+  return cart;
 }
 
-module.exports = specialOffersModel;
+module.exports = cartModel;

@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
 require('dotenv').config();
 const companyModel = (sequelize, DataTypes) => {
-  const model = sequelize.define('company', {
+  const model = sequelize.define('companies', {
     displayName: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -28,10 +28,14 @@ const companyModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    roomId: {
+      type: DataTypes.STRING,
+      required: true,
+    },
     type: {
       type: DataTypes.STRING,
       defaultValue: 'company',
-  },
+    },
     role: {
       type: DataTypes.ENUM('admin', 'serviceProvidre'),
       defaultValue: 'serviceProvidre',
@@ -56,7 +60,7 @@ const companyModel = (sequelize, DataTypes) => {
       type: DataTypes.VIRTUAL,
       get() {
         const acl = {
-          serviceProvidre: ['read'],
+          serviceProvidre: ['read', 'create', 'update'],
           admin: ['read', 'create', 'update', 'delete'],
         }
         return acl[this.role];
@@ -73,38 +77,32 @@ const companyModel = (sequelize, DataTypes) => {
     return hashedPass;
   };
 
-  model.sendEmail = async function (user) {
-    // console.log("ddd",{user});
+  model.sendEmail = async function (user) { //sign up send code
     const email = user.email;
+    console.log({email});
     let userMail = await this.findOne({
-      where: {
-        email: email
-      }
+        where: {
+            email: email
+        }
     })
     let code = userMail.uuCode;
-    console.log('email', {
-      code
-    });
     let transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASS
-      },
-      port: 465,
-      host: 'stmp.gmail.com'
+        service: 'gmail',
+        auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASS
+        },
+        port: 465,
+        host: 'stmp.gmail.com'
     })
     const msg = {
-      from: 'salehziad1999@gmail.com', // sender address
-      to: `${email}`, // list of receivers
-      subject: "Sign Up validation", // Subject line
-      text: `Long time no see welcome to our server use this code ${code} to verify your email here 'https://salehziad-projects.netlify.app/verify'`, // plain text body
+        from: 'salehziad1999@gmail.com', // sender address
+        to: `${email}`, // list of receivers
+        subject: "Sign Up validation", // Subject line
+        text: `Thank you for sign up in our website  use this code ${code} to verify your email`, // plain text body
     }
-    // const info = await transporter.sendMail(msg);
-    console.log({
-      code
-    });
-  }
+    const info = await transporter.sendMail(msg);
+}
 
   model.authenticateBasic = async function (displayName, password) {
     const user = await this.findOne({
@@ -122,13 +120,11 @@ const companyModel = (sequelize, DataTypes) => {
   model.authenticateToken = async function (token) {
     try {
       const parsedToken = jwt.verify(token, process.env.SECRET);
-      console.log(parsedToken.displayName);
       const user = await this.findOne({
         where: {
           displayName: parsedToken.displayName
         }
       });
-      console.log(user);
       if (user) {
         return user;
       }
