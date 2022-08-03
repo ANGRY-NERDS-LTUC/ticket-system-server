@@ -86,9 +86,8 @@ const userModel = (sequelize, DataTypes) => {
             from: 'salehziad1999@gmail.com', // sender address
             to: `${email}`, // list of receivers
             subject: "Sign Up validation", // Subject line
-            text: `Long time no see welcome to our server use this code ${code} to verify your email here 'https://salehziad-projects.netlify.app/verify'`, // plain text body
+            text: `Thank you for sign up in our website  use this code ${code} to verify your email`, // plain text body
         }
-        console.log(code)
         const info = await transporter.sendMail(msg);
     }
 

@@ -1,19 +1,36 @@
 'use strict';
 const express = require('express');
 const adminRoutes = express.Router();
-const { Users } = require('../../models/models.connection');
-const { Companies } = require('../../models/models.connection');
-const { SignInLogs } = require('../../models/models.connection');
+const {
+    Users
+} = require('../../models/models.connection');
+const {
+    Companies
+} = require('../../models/models.connection');
+const {
+    SignInLogs
+} = require('../../models/models.connection');
 const bearer = require('../../middleware/bearer');
 const checkUser = require('../../middleware/checkUser');
 const checkAdmin = require('../../middleware/checkAdmin');
-const { Packages } = require('../../models/models.connection');
-const { Purchase } = require('../../models/models.connection');
+const {
+    Packages
+} = require('../../models/models.connection');
+const {
+    Purchase
+} = require('../../models/models.connection');
 
 // get all users
 adminRoutes.get('/users', bearer, checkUser(), checkAdmin(), getAllUsers);
 async function getAllUsers(req, res) {
     let record = await Users.findAll()
+    res.send(record);
+}
+
+// get all companies
+adminRoutes.get('/company', bearer, checkUser(), checkAdmin(), getAllCompanies);
+async function getAllCompanies(req, res) {
+    let record = await Companies.findAll()
     res.send(record);
 }
 
@@ -36,6 +53,15 @@ async function deleteUser(req, res) {
 adminRoutes.delete('/company/delete', bearer, checkUser(), checkAdmin(), deleteUser);
 async function deleteUser(req, res) {
     let id = req.query.id;
+    let deletedPackages = await Packages.destroy({
+        truncate: {
+            cascade: true
+        },
+        where: {
+            company_Id:id
+        }
+    });
+    console.log({deletedPackages});
     let deleted = await Companies.destroy({
         truncate: {
             cascade: true
@@ -44,7 +70,8 @@ async function deleteUser(req, res) {
             id
         }
     });
-    deleted == 1 ? res.send('deleted') : res.send('can not delete user');
+    console.log({deleted});
+    deleted == 1 && deletedPackages ? res.send('deleted') : res.send('can not delete user');
 }
 
 // get sign in logs

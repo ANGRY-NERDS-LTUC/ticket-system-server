@@ -15,7 +15,7 @@ async function getPackages(req, res) {
         where: {
             published: true,
             rejected: false,
-            specialOffer: false
+            specialOffer: false,
         }
     });
     res.status(200).json(allPackages);
