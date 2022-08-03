@@ -189,3 +189,7 @@ MIT
 ## WireFrame
 
 [WireFrame](./WireFrame.md)
+
+## Home Route Test
+
+![Route Test](./asset/homeRouteTest.png)
