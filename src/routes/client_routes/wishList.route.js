@@ -1,17 +1,11 @@
 'use strict';
 
 const express = require('express');
-const {
-    WishList
-} = require('../../models/models.connection');
+const { WishList } = require('../../models/models.connection');
 const bearer = require('../../middleware/bearer');
 const checkUser = require('../../middleware/checkUser');
-const {
-    Users
-} = require('../../models/models.connection');
-const {
-    Packages
-} = require('../../models/models.connection');
+const { Users } = require('../../models/models.connection');
+const { Packages } = require('../../models/models.connection');
 const wishListRoute = express.Router();
 
 wishListRoute.get('/wishlist', bearer, checkUser(), handleGetAll);

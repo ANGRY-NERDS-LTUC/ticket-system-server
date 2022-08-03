@@ -1,8 +1,6 @@
 'use strict';
 const express = require('express');
-const {
-    Packages
-} = require('../../models/models.connection');
+const { Packages } = require('../../models/models.connection');
 const bearer = require('../../middleware/bearer');
 const checkUser = require('../../middleware/checkUser');
 const packagesRoute = express.Router();
