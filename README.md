@@ -123,7 +123,7 @@ admins - READ/CREATE/UPDATE/DELETE
 
 ## User Routes
 
-### Chart
+### Cart
 
 | method | path                                   | Description              |
 | ------ | -------------------------------------- | ------------------------ |
