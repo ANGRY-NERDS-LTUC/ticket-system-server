@@ -93,7 +93,8 @@ adminRoutes.get('/package/published', bearer, checkUser(), checkAdmin(), getPubl
 async function getPublishedPackeges(req, res) {
     let record = await Packages.findAll({
         where: {
-            published: true
+            published: true,
+            rejected: false
         }
     });
     res.send(record);
