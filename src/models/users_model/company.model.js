@@ -2,19 +2,19 @@
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 const companyModel = (sequelize, DataTypes) => {
   const model = sequelize.define('companies', {
     displayName: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: true,
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,
@@ -22,15 +22,15 @@ const companyModel = (sequelize, DataTypes) => {
     },
     location: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     phoneNumber: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     roomId: {
       type: DataTypes.STRING,
-      required: true,
+      allowNull: true,
     },
     type: {
       type: DataTypes.STRING,
@@ -43,10 +43,13 @@ const companyModel = (sequelize, DataTypes) => {
     token: {
       type: DataTypes.VIRTUAL,
       get() {
-        return jwt.sign({
-          displayName: this.displayName
-        }, process.env.SECRET);
-      }
+        return jwt.sign(
+          {
+            displayName: this.displayName,
+          },
+          process.env.SECRET,
+        );
+      },
     }, //new
     uuCode: {
       type: DataTypes.STRING,
@@ -54,7 +57,7 @@ const companyModel = (sequelize, DataTypes) => {
     },
     isVerify: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      defaultValue: true,
     },
     actions: {
       type: DataTypes.VIRTUAL,
@@ -62,9 +65,9 @@ const companyModel = (sequelize, DataTypes) => {
         const acl = {
           serviceProvidre: ['read', 'create', 'update'],
           admin: ['read', 'create', 'update', 'delete'],
-        }
+        };
         return acl[this.role];
-      }
+      },
     },
     // photos:{
     //   type:DataTypes.STRING,
@@ -77,64 +80,65 @@ const companyModel = (sequelize, DataTypes) => {
     return hashedPass;
   };
 
-  model.sendEmail = async function (user) { //sign up send code
+  model.sendEmail = async function (user) {
+    //sign up send code
     const email = user.email;
-    console.log({email});
+    console.log({ email });
     let userMail = await this.findOne({
-        where: {
-            email: email
-        }
-    })
+      where: {
+        email: email,
+      },
+    });
     let code = userMail.uuCode;
     let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.EMAIL,
-            pass: process.env.PASS
-        },
-        port: 465,
-        host: 'stmp.gmail.com'
-    })
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASS,
+      },
+      port: 465,
+      host: 'stmp.gmail.com',
+    });
     const msg = {
-        from: 'salehziad1999@gmail.com', // sender address
-        to: `${email}`, // list of receivers
-        subject: "Sign Up validation", // Subject line
-        text: `Thank you for sign up in our website  use this code ${code} to verify your email`, // plain text body
-    }
+      from: 'salehziad1999@gmail.com', // sender address
+      to: `${email}`, // list of receivers
+      subject: 'Sign Up validation', // Subject line
+      text: `Thank you for sign up in our website  use this code ${code} to verify your email`, // plain text body
+    };
     const info = await transporter.sendMail(msg);
-}
+  };
 
   model.authenticateBasic = async function (displayName, password) {
     const user = await this.findOne({
       where: {
-        displayName: displayName
-      }
+        displayName: displayName,
+      },
     });
     const valid = await bcrypt.compare(password, user.password);
     if (valid) {
       return user;
     }
     throw new Error('Invalid User');
-  }
+  };
 
   model.authenticateToken = async function (token) {
     try {
       const parsedToken = jwt.verify(token, process.env.SECRET);
       const user = await this.findOne({
         where: {
-          displayName: parsedToken.displayName
-        }
+          displayName: parsedToken.displayName,
+        },
       });
       if (user) {
         return user;
       }
-      throw new Error("User Not Found");
+      throw new Error('User Not Found');
     } catch (e) {
-      throw new Error(e.message)
+      throw new Error(e.message);
     }
-  }
+  };
 
   return model;
-}
+};
 
 module.exports = companyModel;

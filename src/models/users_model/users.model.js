@@ -42,7 +42,7 @@ const userModel = (sequelize, DataTypes) => {
         },
         isVerify: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false,
+            defaultValue: true,
         },
         actions: {
             type: DataTypes.VIRTUAL,
