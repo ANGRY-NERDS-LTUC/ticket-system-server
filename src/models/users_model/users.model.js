@@ -32,7 +32,9 @@ const userModel = (sequelize, DataTypes) => {
             type: DataTypes.VIRTUAL,
             get() {
                 return jwt.sign({
-                    displayName: this.displayName
+                    displayName: this.displayName,
+                    email:this.emai,
+                    password:this.password,
                 }, process.env.SECRET);
             }
         }, //new
