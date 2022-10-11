@@ -40,6 +40,7 @@ And the website provide a service for the users to contact the support team for 
 ## Dependecies
 
 ```js
+Backend:
 {
     "base-64": "^1.0.0",
     "bcrypt": "^5.0.1",
@@ -59,6 +60,41 @@ And the website provide a service for the users to contact the support team for 
     "uuidv4": "^6.2.13"
 }
 ```
+Frontend:
+{
+    "@fortawesome/fontawesome-svg-core": "^6.2.0",
+    "@fortawesome/free-regular-svg-icons": "^6.2.0",
+    "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.27.2",
+    "bootstrap": "^5.2.1",
+    "bootstrap-icons": "^1.9.1",
+    "firebase": "^9.10.0",
+    "js-base64": "^3.7.2",
+    "mdb-react-ui-kit": "^4.2.0",
+    "node-sass": "^7.0.3",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.5.0",
+    "react-card-slider-component": "^1.0.9",
+    "react-cookie": "^4.1.1",
+    "react-cool-form": "^0.4.1",
+    "react-dom": "^18.2.0",
+    "react-file-base64": "^1.0.3",
+    "react-icons": "^4.4.0",
+    "react-router-dom": "^6.4.1",
+    "react-scripts": "5.0.1",
+    "reactstrap": "^9.1.4",
+    "sass": "^1.55.0",
+    "sweetalert2": "^11.4.37",
+    "sweetalert2-react-content": "^5.0.3",
+    "swiper": "^8.4.2",
+    "universal-cookie": "^4.0.4",
+    "uuid": "^9.0.0",
+    "web-vitals": "^2.1.4"
+  }
 
 ## Authrization
 
