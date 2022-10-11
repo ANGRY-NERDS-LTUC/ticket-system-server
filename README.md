@@ -59,7 +59,7 @@ Backend:
     "uuid": "^8.3.2",
     "uuidv4": "^6.2.13"
 }
-```
+
 Frontend:
 {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
@@ -95,6 +95,7 @@ Frontend:
     "uuid": "^9.0.0",
     "web-vitals": "^2.1.4"
   }
+  ```
 
 ## Authrization
 
